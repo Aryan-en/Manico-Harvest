@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import type { ReactElement } from "react";
+import posthog from "posthog-js";
 
 export function HeroSection(): ReactElement {
   return (
@@ -60,6 +63,7 @@ export function HeroSection(): ReactElement {
                 href="/shop"
                 className="flex items-center justify-center gap-2 w-full sm:w-auto font-semibold text-inverse rounded-xl transition-all active:scale-[0.98] bg-accent hover:bg-accent-hover"
                 style={{ padding: "14px 28px", transitionDuration: "var(--duration-base)", fontSize: "15px" }}
+                onClick={() => posthog.capture('shop_all_products_clicked', { source: 'hero' })}
               >
                 Shop All Products
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

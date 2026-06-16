@@ -9,6 +9,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { RegisterSchema } from '@/lib/validations/auth'
 import { useAuth } from '@/hooks/use-auth'
 import type { z } from 'zod'
+import posthog from 'posthog-js'
 
 type FormData = z.infer<typeof RegisterSchema>
 
@@ -29,19 +30,27 @@ export default function SignUpPage() {
     setServerError(null)
     try {
       const result = await registerUser(data.email, data.password, data.name)
+      posthog.identify(data.email, { email: data.email, name: data.name ?? undefined })
+      posthog.capture('user_signed_up', {
+        method: 'email',
+        requires_email_verification: result.requireEmailVerification,
+      })
       if (result.requireEmailVerification) {
         router.push(`/verify-email?email=${encodeURIComponent(data.email)}`)
       } else {
         router.push('/')
       }
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Something went wrong')
+      const message = err instanceof Error ? err.message : 'Something went wrong'
+      posthog.captureException(err instanceof Error ? err : new Error(message))
+      setServerError(message)
     }
   }
 
   async function handleGoogle() {
     setServerError(null)
     setOauthLoading(true)
+    posthog.capture('oauth_sign_in_initiated', { provider: 'google', page: 'sign_up' })
     try {
       await oauthSignIn('google')
     } catch (err) {

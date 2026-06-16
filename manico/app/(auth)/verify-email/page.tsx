@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2, MailCheck, RefreshCw } from 'lucide-react'
 import { z } from 'zod'
 import { useAuth } from '@/hooks/use-auth'
+import posthog from 'posthog-js'
 
 const OtpSchema = z.object({ otp: z.string().length(6, 'Enter the 6-digit code') })
 type FormData = z.infer<typeof OtpSchema>
@@ -31,9 +32,13 @@ export default function VerifyEmailPage() {
     setServerError(null)
     try {
       await verifyEmail(email, data.otp)
+      posthog.identify(email, { email })
+      posthog.capture('email_verification_completed', { email })
       router.push('/')
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Verification failed')
+      const message = err instanceof Error ? err.message : 'Verification failed'
+      posthog.captureException(err instanceof Error ? err : new Error(message))
+      setServerError(message)
     }
   }
 

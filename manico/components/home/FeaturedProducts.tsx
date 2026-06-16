@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import type { ReactElement } from "react";
+import posthog from "posthog-js";
 
 type Product = {
   id: string;
@@ -199,6 +200,14 @@ function ProductCard({
               padding: "10px 18px",
               transitionDuration: "var(--duration-fast)",
             }}
+            onClick={() =>
+              posthog.capture('add_to_cart_clicked', {
+                product_name: product.name,
+                product_slug: product.slug,
+                price: product.price,
+                badge: product.badge,
+              })
+            }
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
@@ -258,6 +267,7 @@ export function FeaturedProducts(): ReactElement {
             href="/shop"
             className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] text-inverse bg-primary hover:opacity-90"
             style={{ padding: "13px 28px", transitionDuration: "var(--duration-fast)" }}
+            onClick={() => posthog.capture('view_full_shop_clicked', { source: 'featured_products' })}
           >
             View Full Shop
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

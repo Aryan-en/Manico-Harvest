@@ -3,6 +3,7 @@
 import { useAuthStore } from '@/store/auth-store'
 import { insforgeBrowser } from '@/lib/insforge-browser'
 import type { AuthUser } from '@/types/auth'
+import posthog from 'posthog-js'
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
@@ -55,6 +56,8 @@ export function useAuth() {
   }
 
   async function logout(): Promise<void> {
+    posthog.capture('user_signed_out')
+    posthog.reset()
     await fetch('/api/v1/auth/logout', { method: 'POST' })
     clearAuthCookie()
     store.setUnauthenticated()
@@ -71,6 +74,8 @@ export function useAuth() {
     const { user, accessToken } = json.data!
     setAuthCookie(accessToken)
     store.setAuthenticated(user, accessToken)
+    posthog.identify(email, { email })
+    posthog.capture('email_verified', { email })
   }
 
   async function oauthSignIn(provider: 'google' | 'github'): Promise<void> {

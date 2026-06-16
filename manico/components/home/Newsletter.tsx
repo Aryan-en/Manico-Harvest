@@ -2,6 +2,7 @@
 
 import type { ReactElement } from "react";
 import { useState } from "react";
+import posthog from "posthog-js";
 
 export function Newsletter(): ReactElement {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ export function Newsletter(): ReactElement {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if (!email) return;
+    posthog.capture('newsletter_subscribed', { source: 'homepage' });
     setSubmitted(true);
   }
 

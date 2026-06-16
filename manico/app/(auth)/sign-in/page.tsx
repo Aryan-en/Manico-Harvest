@@ -9,6 +9,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { LoginSchema } from '@/lib/validations/auth'
 import { useAuth } from '@/hooks/use-auth'
 import type { z } from 'zod'
+import posthog from 'posthog-js'
 
 type FormData = z.infer<typeof LoginSchema>
 
@@ -31,15 +32,20 @@ function SignInForm() {
     setServerError(null)
     try {
       await login(data.email, data.password)
+      posthog.identify(data.email, { email: data.email })
+      posthog.capture('user_signed_in', { method: 'email' })
       router.push(redirect)
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Something went wrong')
+      const message = err instanceof Error ? err.message : 'Something went wrong'
+      posthog.captureException(err instanceof Error ? err : new Error(message))
+      setServerError(message)
     }
   }
 
   async function handleGoogle() {
     setServerError(null)
     setOauthLoading(true)
+    posthog.capture('oauth_sign_in_initiated', { provider: 'google', page: 'sign_in' })
     try {
       await oauthSignIn('google')
     } catch (err) {
@@ -108,6 +114,7 @@ function SignInForm() {
                 href="/forgot-password"
                 className="text-xs font-medium hover:underline"
                 style={{ color: 'var(--color-brand-accent)' }}
+                onClick={() => posthog.capture('forgot_password_clicked')}
               >
                 Forgot password?
               </Link>
