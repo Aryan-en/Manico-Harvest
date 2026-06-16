@@ -49,6 +49,7 @@
 | Seed script: admin user, sample products | `complete` | 3 categories, 5 products, 15 product tags inserted via `run-raw-sql`. |
 | Products API: full CRUD | `complete` | `app/api/v1/products/route.ts` (GET list + POST); `app/api/v1/products/[idOrSlug]/route.ts` (GET by slug/id, PATCH, DELETE). Supports `?featured`, `?category`, `?q`, pagination. |
 | Categories API: full CRUD | `complete` | `app/api/v1/categories/route.ts` (GET, POST); `app/api/v1/categories/[id]/route.ts` (PATCH, DELETE). |
+| Cart API: full CRUD | `complete` | `app/api/v1/cart/route.ts` (GET); `app/api/v1/cart/items/route.ts` (POST add/upsert); `app/api/v1/cart/items/[itemId]/route.ts` (PATCH qty, DELETE). Requires auth token. |
 | Variants API: size/color variant model | `not-started` | |
 | Unit tests: auth utils, JWT helpers | `not-started` | |
 
@@ -60,11 +61,11 @@
 |------|--------|-------|
 | Shared layout: Navbar, Footer, MobileMenu | `complete` | `components/layout/Navbar.tsx`, `Footer.tsx`, `NavbarMobileMenu.tsx` (client). Announcement bar, sticky nav, desktop+mobile nav. |
 | Home page: hero, featured products, category strips | `complete` | `app/page.tsx` composes HeroSection, TrustBar, FeaturedProducts, WhySection, Testimonials, Newsletter. Builds static, passes TS. |
-| Catalog page: product grid, filter sidebar, sort | `not-started` | |
-| Product Detail Page (PDP) | `not-started` | |
-| Cart — Zustand store + CartDrawer | `not-started` | |
+| Catalog page: product grid, filter sidebar, sort | `complete` | `app/shop/page.tsx` — Server Component, category filter sidebar, sort control, search, product grid. `app/shop/loading.tsx` skeleton. |
+| Product Detail Page (PDP) | `complete` | `app/shop/[slug]/page.tsx` — Server Component, generateMetadata, qty picker, related products, trust signals. `app/shop/[slug]/loading.tsx` skeleton. |
+| Cart — Zustand store + CartDrawer | `complete` | `store/cart-store.ts` (Zustand + localStorage persist); `components/cart/CartDrawer.tsx` slide-in drawer; `components/cart/CartItem.tsx`; `components/layout/NavbarCartButton.tsx` with live badge count. |
 | Search: debounced client + server route | `not-started` | |
-| Loading skeletons for all async routes | `not-started` | |
+| Loading skeletons for all async routes | `complete` | `components/product/ProductCardSkeleton.tsx`; loading.tsx for /shop and /shop/[slug]. |
 | Error boundaries + 404 / 500 pages | `not-started` | |
 | Responsive: 320px → 1440px | `not-started` | |
 
@@ -136,14 +137,15 @@
 | `BrandLogo` | 3 | `complete` | `components/layout/BrandLogo.tsx` — cropped emblem from `fav.jpeg` with live Manico Harvest wordmark text. |
 | `Footer` | 3 | `complete` | `components/layout/Footer.tsx` — links, socials, copyright. |
 | `MobileMenu` | 3 | `complete` | `components/layout/NavbarMobileMenu.tsx` — Client Component, slide-in drawer. |
-| `ProductCard` | 3 | `not-started` | |
-| `ProductGrid` | 3 | `not-started` | |
-| `ProductCardSkeleton` | 3 | `not-started` | |
+| `ProductCard` | 3 | `complete` | `components/product/ProductCard.tsx` — Server Component, badge, image, tags, AddToCartButton. |
+| `ProductGrid` | 3 | `complete` | Inline grid in /shop and /shop/[slug] pages. |
+| `ProductCardSkeleton` | 3 | `complete` | `components/product/ProductCardSkeleton.tsx` — animate-pulse skeleton matching card layout. |
+| `AddToCartButton` | 3 | `complete` | `components/product/AddToCartButton.tsx` — client component, qty picker, loading/success states, DB sync for auth users. |
 | `VariantPicker` | 3 | `not-started` | |
 | `ProductImageGallery` | 3 | `not-started` | |
-| `CartDrawer` | 3 | `not-started` | |
-| `CartItem` | 3 | `not-started` | |
-| `CartSummary` | 3 | `not-started` | |
+| `CartDrawer` | 3 | `complete` | `components/cart/CartDrawer.tsx` — slide-in from right, focus trap, Escape key, empty state. |
+| `CartItem` | 3 | `complete` | `components/cart/CartItem.tsx` — qty controls, remove, DB sync for auth users. |
+| `CartSummary` | 3 | `complete` | Inline in CartDrawer footer — subtotal, item count, checkout CTA. |
 | `CheckoutForm` | 4 | `not-started` | |
 | `OrderSummary` | 4 | `not-started` | |
 
@@ -168,6 +170,9 @@
 | `/api/v1/products/:id` | PATCH | 2 | `complete` |
 | `/api/v1/products/:id` | DELETE | 2 | `complete` |
 | `/api/v1/categories` | GET/POST/PATCH/DELETE | 2 | `complete` |
+| `/api/v1/cart` | GET | 3 | `complete` |
+| `/api/v1/cart/items` | POST | 3 | `complete` |
+| `/api/v1/cart/items/:itemId` | PATCH/DELETE | 3 | `complete` |
 | `/api/v1/cart/checkout` | POST | 4 | `not-started` |
 | `/api/v1/webhooks/stripe` | POST | 4 | `not-started` |
 | `/api/v1/orders` | GET | 4 | `not-started` |

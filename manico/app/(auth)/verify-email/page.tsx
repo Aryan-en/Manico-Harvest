@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ import posthog from 'posthog-js'
 const OtpSchema = z.object({ otp: z.string().length(6, 'Enter the 6-digit code') })
 type FormData = z.infer<typeof OtpSchema>
 
-export default function VerifyEmailPage() {
+function VerifyEmailForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const email = searchParams.get('email') ?? ''
@@ -158,5 +158,13 @@ export default function VerifyEmailPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense>
+      <VerifyEmailForm />
+    </Suspense>
   )
 }
