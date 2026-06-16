@@ -41,11 +41,14 @@
 | Auth API: `/login`, `/logout`, `/verify-email`, `/me` | `complete` | 8 route handlers under `app/api/v1/auth/`. Insforge SDK wraps all auth ops. See below. |
 | JWT middleware + role guard utilities | `complete` | `middleware.ts` protects `/admin` + `/account`; `lib/auth/decode-jwt.ts` for token decode/expiry. |
 | Auth Zustand store | `complete` | `store/auth-store.ts` — status, user, accessToken in client memory. |
-| Auth UI: Sign In / Sign Up / Verify Email pages | `complete` | `app/(auth)/sign-in`, `sign-up`, `verify-email`. RHF + Zod, inline errors, show/hide password, OAuth buttons (UI only). |
+| Auth UI: Sign In / Sign Up / Verify Email pages | `complete` | `app/(auth)/sign-in`, `sign-up`, `verify-email`. RHF + Zod, inline errors, show/hide password, OAuth wired. |
 | AuthNavButton in Navbar | `complete` | `components/auth/AuthNavButton.tsx` — shows Sign In + Sign Up links; switches to user name + Sign Out when authenticated. |
-| AuthProvider in root layout | `complete` | `components/auth/AuthProvider.tsx` — initializes Zustand auth state from cookie on app mount. |
-| Products API: full CRUD | `not-started` | |
-| Categories API: full CRUD | `not-started` | |
+| AuthProvider in root layout | `complete` | `components/auth/AuthProvider.tsx` — initializes from cookie (email/password) + `getCurrentUser()` fallback (OAuth). |
+| OAuth Google + GitHub | `complete` | `lib/insforge-browser.ts` browser client; `oauthSignIn()` in `use-auth.ts`; Loader spinners on buttons. |
+| Insforge DB schema: all tables, relations | `complete` | 7 tables created via `run-raw-sql`: `categories`, `products`, `product_tags`, `cart_items`, `orders`, `order_items`, `discount_codes`. |
+| Seed script: admin user, sample products | `complete` | 3 categories, 5 products, 15 product tags inserted via `run-raw-sql`. |
+| Products API: full CRUD | `complete` | `app/api/v1/products/route.ts` (GET list + POST); `app/api/v1/products/[idOrSlug]/route.ts` (GET by slug/id, PATCH, DELETE). Supports `?featured`, `?category`, `?q`, pagination. |
+| Categories API: full CRUD | `complete` | `app/api/v1/categories/route.ts` (GET, POST); `app/api/v1/categories/[id]/route.ts` (PATCH, DELETE). |
 | Variants API: size/color variant model | `not-started` | |
 | Unit tests: auth utils, JWT helpers | `not-started` | |
 
@@ -159,12 +162,12 @@
 | `/api/v1/auth/forgot-password` | POST | 2 | `complete` |
 | `/api/v1/auth/exchange-reset-token` | POST | 2 | `complete` |
 | `/api/v1/auth/reset-password` | POST | 2 | `complete` |
-| `/api/v1/products` | GET | 2 | `not-started` |
-| `/api/v1/products/:slug` | GET | 2 | `not-started` |
-| `/api/v1/products` | POST | 2 | `not-started` |
-| `/api/v1/products/:id` | PATCH | 2 | `not-started` |
-| `/api/v1/products/:id` | DELETE | 2 | `not-started` |
-| `/api/v1/categories` | GET/POST/PATCH/DELETE | 2 | `not-started` |
+| `/api/v1/products` | GET | 2 | `complete` |
+| `/api/v1/products/:slug` | GET | 2 | `complete` |
+| `/api/v1/products` | POST | 2 | `complete` |
+| `/api/v1/products/:id` | PATCH | 2 | `complete` |
+| `/api/v1/products/:id` | DELETE | 2 | `complete` |
+| `/api/v1/categories` | GET/POST/PATCH/DELETE | 2 | `complete` |
 | `/api/v1/cart/checkout` | POST | 4 | `not-started` |
 | `/api/v1/webhooks/stripe` | POST | 4 | `not-started` |
 | `/api/v1/orders` | GET | 4 | `not-started` |
@@ -200,3 +203,6 @@
 | 2026-06-10 | Replaced Prisma/PlanetScale with Insforge BaaS | User confirmed Insforge as backend platform. Removes Prisma, MySQL, Docker Compose from the stack. Insforge SDK (`@insforge/sdk`) handles DB, auth, storage, and AI. |
 | 2026-06-10 | Auth uses Insforge SDK server-side via route handler proxy | Route handlers at `/api/v1/auth/*` wrap the Insforge SDK. Access token returned to client; stored in Zustand (memory) + `auth-token` cookie for middleware. Refresh token handled by Insforge httpOnly cookie on direct SDK calls. |
 | 2026-06-10 | Fixed Next.js version from 9.3.3 → 16.2.9 | `package.json` had `^9.3.3` (wrong); `.next` artifacts and `eslint-config-next@16.2.9` confirmed 16 was the intended version. |
+| 2026-06-16 | OAuth uses browser-side Insforge client | `lib/insforge-browser.ts` uses hardcoded backend URL + `NEXT_PUBLIC_INSFORGE_ANON_KEY`. `AuthProvider` falls back to `getCurrentUser()` for OAuth sessions after email/password check fails. |
+| 2026-06-16 | Products DELETE is soft-delete (is_active=false) | Preserves order history FK references. Admin can re-activate via PATCH. |
+| 2026-06-16 | Products API accepts slug or UUID in `[idOrSlug]` | UUID regex check determines filter column — no separate slug endpoint needed. |

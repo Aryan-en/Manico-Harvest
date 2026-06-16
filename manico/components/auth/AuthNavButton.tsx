@@ -44,13 +44,6 @@ export function AuthNavButton() {
   return (
     <div className="hidden lg:flex items-center gap-2 ml-2">
       <Link
-        href="/sign-in"
-        className="text-sm font-medium text-nav-link hover:text-inverse transition-colors"
-        style={{ transitionDuration: 'var(--duration-fast)' }}
-      >
-        Sign In
-      </Link>
-      <Link
         href="/sign-up"
         className="flex items-center rounded-lg text-sm font-semibold bg-accent hover:bg-accent-hover text-inverse active:scale-[0.98] transition-all"
         style={{ padding: '8px 18px', transitionDuration: 'var(--duration-fast)' }}

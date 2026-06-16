@@ -1,9 +1,10 @@
 'use client'
 
 import { useAuthStore } from '@/store/auth-store'
+import { insforgeBrowser } from '@/lib/insforge-browser'
 import type { AuthUser } from '@/types/auth'
 
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
 function setAuthCookie(token: string) {
   document.cookie = `auth-token=${token}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Strict`
@@ -23,7 +24,7 @@ export function useAuth() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     })
-    const json = await res.json() as { data?: { user: AuthUser; accessToken: string }; error?: string }
+    const json = (await res.json()) as { data?: { user: AuthUser; accessToken: string }; error?: string }
     if (!res.ok) {
       store.setError(json.error ?? 'Login failed')
       throw new Error(json.error ?? 'Login failed')
@@ -44,7 +45,7 @@ export function useAuth() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, name }),
     })
-    const json = await res.json() as { data?: { requireEmailVerification?: boolean }; error?: string }
+    const json = (await res.json()) as { data?: { requireEmailVerification?: boolean }; error?: string }
     if (!res.ok) {
       store.setError(json.error ?? 'Registration failed')
       throw new Error(json.error ?? 'Registration failed')
@@ -65,12 +66,24 @@ export function useAuth() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, otp }),
     })
-    const json = await res.json() as { data?: { user: AuthUser; accessToken: string }; error?: string }
+    const json = (await res.json()) as { data?: { user: AuthUser; accessToken: string }; error?: string }
     if (!res.ok) throw new Error(json.error ?? 'Verification failed')
     const { user, accessToken } = json.data!
     setAuthCookie(accessToken)
     store.setAuthenticated(user, accessToken)
   }
 
-  return { login, register, logout, verifyEmail }
+  async function oauthSignIn(provider: 'google' | 'github'): Promise<void> {
+    const additionalParams = provider === 'google' ? { prompt: 'select_account' } : undefined
+    const { error } = await insforgeBrowser.auth.signInWithOAuth(provider, {
+      redirectTo: `${window.location.origin}/`,
+      ...(additionalParams ? { additionalParams } : {}),
+    })
+    if (error) {
+      throw new Error((error as { message?: string }).message ?? 'OAuth sign-in failed')
+    }
+    // SDK auto-redirects the browser — no further execution
+  }
+
+  return { login, register, logout, verifyEmail, oauthSignIn }
 }
