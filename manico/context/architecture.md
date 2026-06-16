@@ -12,7 +12,7 @@
 ┌───────────────▼─────────────────────────────────────┐
 │                   NEXT.JS SERVER                    │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────┐ │
-│  │ App Router   │  │ Route        │  │ Middleware │ │
+│  │ App Router   │  │ Route        │  │ Proxy │ │
 │  │ (Pages/RSC)  │  │ Handlers     │  │ (Auth JWT) │ │
 │  └──────────────┘  └──────┬───────┘  └───────────┘ │
 └─────────────────────────┬─┘───────────────────────── ┘
@@ -69,7 +69,7 @@ Client: POST /api/v1/cart/checkout
 ```
 Admin Client → POST /api/v1/admin/products
   [Authorization: Bearer <access_token>]
-  → Middleware: verifyJWT()
+  → Proxy: verifyJWT()
   → verifyRole("admin")
   → Controller → Prisma → MySQL
 ```
@@ -101,7 +101,7 @@ POST /api/v1/auth/logout
   → client discards accessToken from memory
 ```
 
-### Middleware Guard
+### Proxy Guard
 ```ts
 // Applied to all /api/v1/admin/* and /api/v1/account/* routes
 verifyJWT → decode → attach req.user → next()

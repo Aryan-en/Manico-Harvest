@@ -39,7 +39,7 @@
 | Insforge DB schema: all tables, relations | `not-started` | Replaces Prisma schema. Use `mcp__insforge__run-raw-sql` + `get-table-schema` for management. |
 | Seed script: admin user, sample products | `not-started` | Via `mcp__insforge__bulk-upsert` or Insforge dashboard. |
 | Auth API: `/login`, `/logout`, `/verify-email`, `/me` | `complete` | 8 route handlers under `app/api/v1/auth/`. Insforge SDK wraps all auth ops. See below. |
-| JWT middleware + role guard utilities | `complete` | `middleware.ts` protects `/admin` + `/account`; `lib/auth/decode-jwt.ts` for token decode/expiry. |
+| JWT middleware + role guard utilities | `complete` | `proxy.ts` protects `/admin` + `/account`; `lib/auth/decode-jwt.ts` for token decode/expiry. |
 | Auth Zustand store | `complete` | `store/auth-store.ts` — status, user, accessToken in client memory. |
 | Auth UI: Sign In / Sign Up / Verify Email pages | `complete` | `app/(auth)/sign-in`, `sign-up`, `verify-email`. RHF + Zod, inline errors, show/hide password, OAuth wired. |
 | AuthNavButton in Navbar | `complete` | `components/auth/AuthNavButton.tsx` — shows Sign In + Sign Up links; switches to user name + Sign Out when authenticated. |

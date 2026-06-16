@@ -4,7 +4,7 @@ import { isTokenExpired } from '@/lib/auth/decode-jwt'
 const PROTECTED = ['/admin', '/account']
 const AUTH_ONLY = ['/sign-in', '/sign-up', '/verify-email']
 
-export function middleware(req: NextRequest): NextResponse {
+export function proxy(req: NextRequest): NextResponse {
   const { pathname } = req.nextUrl
   const token = req.cookies.get('auth-token')?.value
 
