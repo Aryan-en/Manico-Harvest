@@ -54,23 +54,32 @@ export function NavbarMobileMenu(): React.ReactElement {
         )}
       </button>
 
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-          className="fixed inset-0 flex lg:hidden"
-          style={{ zIndex: "var(--z-drawer)" }}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+        className="fixed inset-0 flex lg:hidden"
+        style={{ zIndex: "var(--z-drawer)", pointerEvents: isOpen ? "auto" : "none" }}
+      >
+        <button
+          aria-label="Close menu"
+          tabIndex={isOpen ? 0 : -1}
+          className="absolute inset-0 w-full h-full cursor-default transition-opacity"
+          style={{
+            background: "var(--color-bg-overlay)",
+            opacity: isOpen ? 1 : 0,
+            transitionDuration: "var(--duration-slow)",
+          }}
+          onClick={() => setIsOpen(false)}
+        />
+        <nav
+          className="relative flex flex-col w-72 h-full bg-primary shadow-xl ml-auto transition-transform"
+          style={{
+            transform: isOpen ? "translateX(0)" : "translateX(100%)",
+            transitionDuration: "var(--duration-slow)",
+            transitionTimingFunction: "var(--ease-out)",
+          }}
         >
-          <button
-            aria-label="Close menu"
-            className="absolute inset-0 w-full h-full cursor-default"
-            style={{ background: "var(--color-bg-overlay)" }}
-            onClick={() => setIsOpen(false)}
-          />
-          <nav
-            className="relative flex flex-col w-72 h-full bg-primary shadow-xl ml-auto"
-          >
             <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: "var(--color-brand-muted)" }}>
               <Link href="/" aria-label="Manico Harvest home" onClick={() => setIsOpen(false)}>
                 <BrandLogo size="sm" />
@@ -158,8 +167,7 @@ export function NavbarMobileMenu(): React.ReactElement {
               </Link>
             </div>
           </nav>
-        </div>
-      )}
+      </div>
     </>
   );
 }

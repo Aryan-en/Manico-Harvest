@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { PageHeader } from '@/components/layout/PageHeader'
+import { Reveal } from '@/components/motion/Reveal'
 
 export const metadata: Metadata = {
   title: 'Our Story — Manico Harvest',
@@ -48,33 +49,34 @@ export default function AboutPage() {
 
         {/* Mission */}
         <section className="py-16 sm:py-20">
-          <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal className="mx-auto w-full max-w-[880px] px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-lg sm:text-xl leading-relaxed" style={{ color: 'var(--color-text-primary)', lineHeight: '1.8' }}>
               We&apos;re a small team obsessed with one thing: bringing the functional foods of Ayurvedic
               tradition — moringa, millets, functional mushrooms, basil seeds — into products that fit
               a modern life. No compromises on ingredients. No shortcuts on nutrition. Just real food,
               made simply.
             </p>
-          </div>
+          </Reveal>
         </section>
 
         {/* Values */}
         <section className="py-16 sm:py-20" style={{ background: 'var(--color-bg-subtle)' }}>
           <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <Reveal className="text-center mb-12">
               <p className="text-xs font-bold tracking-[0.2em] mb-3" style={{ color: 'var(--color-brand-accent)' }}>
                 WHAT WE STAND FOR
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: 'var(--color-brand-primary)' }}>
                 Our Values
               </h2>
-            </div>
+            </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {VALUES.map((value, i) => (
-                <div
+                <Reveal
                   key={value.title}
-                  className="flex gap-5 rounded-2xl p-6"
-                  style={{ background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}
+                  delay={i * 90}
+                  className="flex gap-5 rounded-2xl p-6 transition-all hover:-translate-y-1 hover:shadow-md"
+                  style={{ background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)', transitionDuration: 'var(--duration-base)' }}
                 >
                   <span
                     className="flex items-center justify-center w-10 h-10 rounded-xl font-bold text-sm shrink-0"
