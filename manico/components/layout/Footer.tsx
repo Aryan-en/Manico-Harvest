@@ -12,6 +12,7 @@ const FOOTER_LINKS = {
   Company: [
     { label: "Our Story", href: "/about" },
     { label: "Benefits", href: "/benefits" },
+    { label: "Recipes", href: "/recipes" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
@@ -106,16 +107,16 @@ export function Footer(): ReactElement {
               <ul className="flex flex-col gap-3">
                 {links.map((link) => (
                   <li key={link.href}>
-                    <a
+                    <Link
                       href={link.href}
-                      className="text-sm transition-colors"
+                      className="text-sm transition-colors hover:text-inverse"
                       style={{
                         color: "rgba(247,236,217,0.6)",
                         transitionDuration: "var(--duration-fast)",
                       }}
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -137,17 +138,17 @@ export function Footer(): ReactElement {
           </p>
           <div className="flex items-center gap-6">
             {["Privacy Policy", "Terms of Service"].map((label) => (
-              <a
+              <Link
                 key={label}
                 href={`/${label.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-xs transition-colors"
+                className="text-xs transition-colors hover:text-inverse"
                 style={{
                   color: "rgba(247,236,217,0.4)",
                   transitionDuration: "var(--duration-fast)",
                 }}
               >
                 {label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ReactElement } from "react";
+import { Reveal } from "@/components/motion/Reveal";
 
 type Feature = {
   icon: ReactElement;
@@ -59,7 +60,7 @@ export function WhySection(): ReactElement {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
 
           {/* Left — Image stack */}
-          <div className="relative w-full lg:w-[380px] shrink-0 flex justify-center">
+          <Reveal variant="scale" className="relative w-full lg:w-[380px] shrink-0 flex justify-center">
             <div className="relative w-64 h-80 sm:w-72 sm:h-96">
               {/* Back card */}
               <div
@@ -96,40 +97,44 @@ export function WhySection(): ReactElement {
                 />
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right — Content */}
           <div className="flex-1 min-w-0">
-            <p
-              className="text-xs font-bold tracking-[0.2em] mb-3"
-              style={{ color: "var(--color-brand-accent)" }}
-            >
-              WHY MANICO HARVEST
-            </p>
-            <h2
-              className="text-3xl sm:text-4xl font-bold mb-4"
-              style={{ color: "var(--color-brand-primary)" }}
-            >
-              Food That Works as Hard as You Do
-            </h2>
-            <p
-              className="text-base mb-10 max-w-lg"
-              style={{ color: "var(--color-text-secondary)", lineHeight: "1.75" }}
-            >
-              We believe nutrition shouldn&apos;t be complicated. Our products bring
-              the wisdom of ancient grains and herbs into your modern day —
-              simple, clean, and effective.
-            </p>
+            <Reveal>
+              <p
+                className="text-xs font-bold tracking-[0.2em] mb-3"
+                style={{ color: "var(--color-brand-accent)" }}
+              >
+                WHY MANICO HARVEST
+              </p>
+              <h2
+                className="text-3xl sm:text-4xl font-bold mb-4"
+                style={{ color: "var(--color-brand-primary)" }}
+              >
+                Food That Works as Hard as You Do
+              </h2>
+              <p
+                className="text-base mb-10 max-w-lg"
+                style={{ color: "var(--color-text-secondary)", lineHeight: "1.75" }}
+              >
+                We believe nutrition shouldn&apos;t be complicated. Our products bring
+                the wisdom of ancient grains and herbs into your modern day —
+                simple, clean, and effective.
+              </p>
+            </Reveal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-              {FEATURES.map((feature) => (
-                <div
+              {FEATURES.map((feature, i) => (
+                <Reveal
                   key={feature.title}
-                  className="flex gap-4 rounded-xl p-5"
+                  delay={i * 90}
+                  className="flex gap-4 rounded-xl p-5 transition-all hover:-translate-y-1"
                   style={{
                     background: "var(--color-bg-surface)",
                     border: "1px solid var(--color-border)",
                     boxShadow: "var(--shadow-sm)",
+                    transitionDuration: "var(--duration-base)",
                   }}
                 >
                   <div
@@ -149,13 +154,13 @@ export function WhySection(): ReactElement {
                       {feature.description}
                     </p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
 
             <a
               href="/about"
-              className="inline-flex items-center gap-2 font-semibold text-inverse rounded-xl transition-all active:scale-[0.98]"
+              className="inline-flex items-center gap-2 font-semibold text-inverse rounded-xl transition-all active:scale-[0.98] hover:-translate-y-0.5 hover:shadow-lg"
               style={{
                 background: "var(--color-brand-primary)",
                 padding: "13px 24px",

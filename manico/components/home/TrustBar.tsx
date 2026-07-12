@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { Reveal } from "@/components/motion/Reveal";
 
 type TrustItem = {
   label: string;
@@ -61,8 +62,11 @@ export function TrustBar(): ReactElement {
       <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <ul className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:gap-12">
           {TRUST_ITEMS.map((item, i) => (
-            <li
+            <Reveal
               key={item.label}
+              as="li"
+              variant="fade"
+              delay={i * 60}
               className="flex items-center gap-2.5"
             >
               <span style={{ color: "var(--color-brand-accent)" }}>{item.icon}</span>
@@ -79,7 +83,7 @@ export function TrustBar(): ReactElement {
                   aria-hidden="true"
                 />
               )}
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

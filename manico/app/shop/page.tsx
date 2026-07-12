@@ -5,6 +5,8 @@ import { ProductCard } from '@/components/product/ProductCard'
 import { SortSelect } from '@/components/catalog/SortSelect'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { PageHeader } from '@/components/layout/PageHeader'
+import { Reveal } from '@/components/motion/Reveal'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -90,21 +92,11 @@ export default async function ShopPage({
     <>
       <Navbar />
       <main className="flex-1" style={{ background: 'var(--color-bg-base)' }}>
-        {/* Page Header */}
-        <div
-          className="py-12"
-          style={{ background: 'var(--color-brand-primary)', color: 'var(--color-text-inverse)' }}
-        >
-          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-bold tracking-[0.2em] mb-2" style={{ color: 'var(--color-brand-accent)' }}>
-              ALL PRODUCTS
-            </p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-3">Shop Manico Harvest</h1>
-            <p className="text-sm opacity-80 max-w-md">
-              Functional foods crafted from whole, clean ingredients.
-            </p>
-          </div>
-        </div>
+        <PageHeader
+          eyebrow="ALL PRODUCTS"
+          title="Shop Manico Harvest"
+          description="Functional foods crafted from whole, clean ingredients — no fillers, no compromises."
+        />
 
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
@@ -203,7 +195,7 @@ export default async function ShopPage({
 
               {/* Product Grid */}
               {products.length === 0 ? (
-                <div className="flex flex-col items-center gap-4 py-20">
+                <div className="flex flex-col items-center gap-4 py-20 animate-scale-in">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--color-border-strong)' }} aria-hidden="true">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                     <line x1="3" y1="6" x2="21" y2="6" />
@@ -225,8 +217,10 @@ export default async function ShopPage({
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 lg:gap-6">
-                  {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                  {products.map((product, i) => (
+                    <Reveal key={product.id} delay={Math.min(i, 8) * 60}>
+                      <ProductCard product={product} />
+                    </Reveal>
                   ))}
                 </div>
               )}

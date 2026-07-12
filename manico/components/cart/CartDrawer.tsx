@@ -35,14 +35,18 @@ export function CartDrawer() {
   return (
     <>
       {/* Backdrop */}
-      {isDrawerOpen && (
-        <div
-          className="fixed inset-0"
-          style={{ background: 'var(--color-bg-overlay)', zIndex: 'var(--z-drawer)' }}
-          onClick={closeDrawer}
-          aria-hidden="true"
-        />
-      )}
+      <div
+        className="fixed inset-0 transition-opacity"
+        style={{
+          background: 'var(--color-bg-overlay)',
+          zIndex: 'var(--z-drawer)',
+          opacity: isDrawerOpen ? 1 : 0,
+          pointerEvents: isDrawerOpen ? 'auto' : 'none',
+          transitionDuration: 'var(--duration-slow)',
+        }}
+        onClick={closeDrawer}
+        aria-hidden="true"
+      />
 
       {/* Drawer */}
       <div
@@ -94,7 +98,7 @@ export function CartDrawer() {
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-6">
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full gap-4 py-16">
+            <div className="flex flex-col items-center justify-center h-full gap-4 py-16 animate-fade-in">
               <div
                 className="flex items-center justify-center w-16 h-16 rounded-2xl"
                 style={{ background: 'var(--color-bg-subtle)' }}

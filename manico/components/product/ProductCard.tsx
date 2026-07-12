@@ -30,12 +30,13 @@ export function ProductCard({ product, featured = false }: Props): ReactElement 
 
   return (
     <article
-      className="group flex flex-col rounded-2xl overflow-hidden transition-all"
+      className="group flex flex-col rounded-2xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg"
       style={{
         background: 'var(--color-bg-surface)',
         border: '1px solid var(--color-border)',
         boxShadow: 'var(--shadow-sm)',
         transitionDuration: 'var(--duration-base)',
+        transitionTimingFunction: 'var(--ease-out)',
       }}
     >
       {/* Image */}

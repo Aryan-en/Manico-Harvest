@@ -64,10 +64,14 @@
 | Catalog page: product grid, filter sidebar, sort | `complete` | `app/shop/page.tsx` — Server Component, category filter sidebar, sort control, search, product grid. `app/shop/loading.tsx` skeleton. |
 | Product Detail Page (PDP) | `complete` | `app/shop/[slug]/page.tsx` — Server Component, generateMetadata, qty picker, related products, trust signals. `app/shop/[slug]/loading.tsx` skeleton. |
 | Cart — Zustand store + CartDrawer | `complete` | `store/cart-store.ts` (Zustand + localStorage persist); `components/cart/CartDrawer.tsx` slide-in drawer; `components/cart/CartItem.tsx`; `components/layout/NavbarCartButton.tsx` with live badge count. |
-| Search: debounced client + server route | `not-started` | |
+| Search: debounced client + server route | `complete` | `components/layout/NavbarSearch.tsx` — modal search overlay, submits to `/shop?q=`. Reuses existing products API `?q=` filter. Not debounced (submit-based, not live-as-you-type). |
 | Loading skeletons for all async routes | `complete` | `components/product/ProductCardSkeleton.tsx`; loading.tsx for /shop and /shop/[slug]. |
-| Error boundaries + 404 / 500 pages | `not-started` | |
-| Responsive: 320px → 1440px | `not-started` | |
+| Error boundaries + 404 / 500 pages | `complete` | `app/not-found.tsx` (404), `app/error.tsx` (global error boundary, client component, captures to PostHog). |
+| Responsive: 320px → 1440px | `in-progress` | Mobile-first Tailwind classes used throughout; not yet audited at all breakpoints. |
+| Info pages: About, Benefits, Contact, FAQ | `complete` | `app/about`, `app/benefits`, `app/contact` (with `ContactForm`), `app/faq` (with `FaqAccordion`). Fixes previously broken Navbar links. |
+| Policy pages: Shipping, Returns, Privacy, Terms | `complete` | `app/shipping`, `app/returns`, `app/privacy-policy`, `app/terms-of-service`. Shared `components/layout/PolicyContent.tsx`. Fixes previously broken Footer links. |
+| Track Order + Blog placeholder | `complete` | `app/track` (form, graceful "not found" state — no orders table wired yet); `app/blog` ("coming soon" empty state). |
+| Mobile nav: auth state (sign in/out) | `complete` | `NavbarMobileMenu.tsx` — previously had no way to sign in/out on mobile since `AuthNavButton` is `hidden lg:flex`. Now shows Sign In/Sign Up or user name + Sign Out. |
 
 ---
 

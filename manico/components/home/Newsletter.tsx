@@ -3,6 +3,7 @@
 import type { ReactElement } from "react";
 import { useState } from "react";
 import posthog from "posthog-js";
+import { Reveal } from "@/components/motion/Reveal";
 
 export function Newsletter(): ReactElement {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export function Newsletter(): ReactElement {
   return (
     <section className="py-20 bg-primary">
       <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
+        <Reveal className="max-w-2xl mx-auto text-center">
 
           <div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest mb-6"
@@ -47,7 +48,7 @@ export function Newsletter(): ReactElement {
 
           {submitted ? (
             <div
-              className="flex items-center justify-center gap-3 rounded-xl px-6 py-4 mx-auto max-w-md"
+              className="flex items-center justify-center gap-3 rounded-xl px-6 py-4 mx-auto max-w-md animate-scale-in"
               style={{ background: "rgba(22,163,74,0.15)", border: "1px solid rgba(22,163,74,0.3)" }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -74,16 +75,17 @@ export function Newsletter(): ReactElement {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-lg text-foreground placeholder:text-disabled outline-none bg-surface border"
+                className="flex-1 rounded-lg text-foreground placeholder:text-disabled outline-none bg-surface border transition-colors"
                 style={{
                   padding: "var(--space-input)",
                   borderColor: "var(--color-border)",
                   fontSize: "var(--text-base)",
+                  transitionDuration: "var(--duration-fast)",
                 }}
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-lg font-semibold text-inverse transition-all active:scale-[0.98] bg-accent hover:bg-accent-hover"
+                className="shrink-0 rounded-lg font-semibold text-inverse transition-all active:scale-[0.98] bg-accent hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ padding: "var(--space-button-md)", transitionDuration: "var(--duration-fast)" }}
               >
                 Subscribe
@@ -98,7 +100,7 @@ export function Newsletter(): ReactElement {
             No spam. Unsubscribe anytime. Your email is safe with us.
           </p>
 
-        </div>
+        </Reveal>
       </div>
     </section>
   );

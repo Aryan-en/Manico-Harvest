@@ -4,6 +4,7 @@ import { insforge } from '@/lib/insforge'
 import type { Product } from '@/types/product'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductCardSkeleton } from '@/components/product/ProductCardSkeleton'
+import { Reveal } from '@/components/motion/Reveal'
 
 async function getFeaturedProducts(): Promise<Product[]> {
   const { data, error } = await insforge.database
@@ -26,7 +27,7 @@ export async function FeaturedProducts(): Promise<ReactElement> {
       <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <p className="text-xs font-bold tracking-[0.2em] mb-3" style={{ color: 'var(--color-brand-accent)' }}>
             OUR PRODUCTS
           </p>
@@ -37,7 +38,7 @@ export async function FeaturedProducts(): Promise<ReactElement> {
           <p className="text-base max-w-lg mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
             Thoughtfully crafted with wholesome, clean ingredients — no fillers, no compromises.
           </p>
-        </div>
+        </Reveal>
 
         {products.length === 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
@@ -48,16 +49,20 @@ export async function FeaturedProducts(): Promise<ReactElement> {
           <>
             {/* Top row — up to 2 featured products */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-              {products.slice(0, 2).map((product) => (
-                <ProductCard key={product.id} product={product} featured />
+              {products.slice(0, 2).map((product, i) => (
+                <Reveal key={product.id} delay={i * 100}>
+                  <ProductCard product={product} featured />
+                </Reveal>
               ))}
             </div>
 
             {/* Bottom row — remaining products */}
             {products.length > 2 && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {products.slice(2).map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                {products.slice(2).map((product, i) => (
+                  <Reveal key={product.id} delay={i * 100}>
+                    <ProductCard product={product} />
+                  </Reveal>
                 ))}
               </div>
             )}
@@ -65,10 +70,10 @@ export async function FeaturedProducts(): Promise<ReactElement> {
         )}
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <Reveal className="text-center mt-12">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90"
+            className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
             style={{
               background: 'var(--color-brand-primary)',
               color: 'var(--color-text-inverse)',
@@ -81,7 +86,7 @@ export async function FeaturedProducts(): Promise<ReactElement> {
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
           </Link>
-        </div>
+        </Reveal>
 
       </div>
     </section>

@@ -55,7 +55,7 @@ export function CartItemRow({ item }: Props) {
   }
 
   return (
-    <div className="flex gap-4 py-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
+    <div className="flex gap-4 py-4 animate-fade-in" style={{ borderBottom: '1px solid var(--color-border)' }}>
       {/* Image */}
       <Link
         href={`/shop/${item.slug}`}

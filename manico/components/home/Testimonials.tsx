@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { Reveal } from "@/components/motion/Reveal";
 
 type Testimonial = {
   name: string;
@@ -63,7 +64,7 @@ export function Testimonials(): ReactElement {
       <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <p className="text-xs font-bold tracking-[0.2em] mb-3" style={{ color: "var(--color-brand-accent)" }}>
             REAL REVIEWS
           </p>
@@ -71,18 +72,21 @@ export function Testimonials(): ReactElement {
             What Our Community Says
           </h2>
           <p className="text-sm text-secondary">Join 10,000+ customers who made the switch to clean nutrition.</p>
-        </div>
+        </Reveal>
 
         {/* Testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
-          {TESTIMONIALS.map((t) => (
-            <article
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal
               key={t.name}
-              className="flex flex-col rounded-2xl p-6"
+              as="article"
+              delay={i * 100}
+              className="flex flex-col rounded-2xl p-6 transition-all hover:-translate-y-1"
               style={{
                 background: "var(--color-bg-surface)",
                 border: "1px solid var(--color-border)",
                 boxShadow: "var(--shadow-md)",
+                transitionDuration: "var(--duration-base)",
               }}
             >
               <Stars count={t.rating} />
@@ -113,12 +117,13 @@ export function Testimonials(): ReactElement {
                   </p>
                 </div>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
 
         {/* Stats bar */}
-        <div
+        <Reveal
+          variant="scale"
           className="rounded-2xl px-8 py-8 flex flex-wrap items-center justify-around gap-8"
           style={{
             background: "var(--color-brand-primary)",
@@ -143,7 +148,7 @@ export function Testimonials(): ReactElement {
               </p>
             </div>
           ))}
-        </div>
+        </Reveal>
 
       </div>
     </section>

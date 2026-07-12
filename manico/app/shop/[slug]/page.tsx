@@ -7,6 +7,7 @@ import { AddToCartButton } from '@/components/product/AddToCartButton'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { Reveal } from '@/components/motion/Reveal'
 import type { Metadata } from 'next'
 
 type Params = { params: Promise<{ slug: string }> }
@@ -90,7 +91,7 @@ export default async function PDPPage({ params }: Params) {
             {/* Image */}
             <div className="w-full lg:w-1/2">
               <div
-                className="relative w-full rounded-2xl overflow-hidden"
+                className="group relative w-full rounded-2xl overflow-hidden animate-scale-in"
                 style={{
                   aspectRatio: '1/1',
                   background: 'linear-gradient(145deg, #f5ead6 0%, var(--color-bg-base) 100%)',
@@ -116,7 +117,8 @@ export default async function PDPPage({ params }: Params) {
                     alt={product.name}
                     fill
                     priority
-                    className="object-contain p-8"
+                    className="object-contain p-8 transition-transform group-hover:scale-105"
+                    style={{ transitionDuration: 'var(--duration-slow)' }}
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 ) : (
@@ -130,7 +132,7 @@ export default async function PDPPage({ params }: Params) {
             </div>
 
             {/* Details */}
-            <div className="w-full lg:w-1/2 flex flex-col">
+            <div className="w-full lg:w-1/2 flex flex-col animate-fade-in" style={{ animationDelay: '100ms' }}>
               {product.categories && (
                 <Link
                   href={`/shop?category=${product.categories.slug}`}
@@ -248,12 +250,14 @@ export default async function PDPPage({ params }: Params) {
           {/* Related Products */}
           {related.length > 0 && (
             <div className="mt-20">
-              <h2 className="text-2xl font-bold mb-8" style={{ color: 'var(--color-brand-primary)' }}>
+              <Reveal as="h2" className="text-2xl font-bold mb-8" style={{ color: 'var(--color-brand-primary)' }}>
                 You Might Also Like
-              </h2>
+              </Reveal>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 lg:gap-6">
-                {related.map((p) => (
-                  <ProductCard key={p.id} product={p} />
+                {related.map((p, i) => (
+                  <Reveal key={p.id} delay={i * 80}>
+                    <ProductCard product={p} />
+                  </Reveal>
                 ))}
               </div>
             </div>
