@@ -15,9 +15,9 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
       className="min-h-screen flex items-center justify-center px-4"
       style={{ background: 'var(--color-bg-base)' }}
     >
-      <div className="text-center max-w-md">
+      <div className="text-center max-w-md animate-fade-in">
         <div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 animate-scale-in"
           style={{ background: 'var(--color-error-bg)' }}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -35,7 +35,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
             style={{
               background: 'var(--color-brand-accent)',
               color: 'var(--color-text-inverse)',
@@ -47,7 +47,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
           </button>
           <Link
             href="/"
-            className="w-full sm:w-auto font-semibold rounded-xl transition-all active:scale-[0.98]"
+            className="w-full sm:w-auto font-semibold rounded-xl transition-all active:scale-[0.98] hover:-translate-y-0.5"
             style={{
               border: '1.5px solid var(--color-border)',
               color: 'var(--color-brand-primary)',

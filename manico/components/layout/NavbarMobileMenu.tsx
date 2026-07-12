@@ -37,8 +37,8 @@ export function NavbarMobileMenu(): React.ReactElement {
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
         onClick={() => setIsOpen((v) => !v)}
-        className="lg:hidden flex items-center justify-center w-11 h-11 rounded-lg text-inverse transition-colors"
-        style={{ background: isOpen ? "var(--color-brand-muted)" : "transparent" }}
+        className="lg:hidden flex items-center justify-center w-11 h-11 rounded-full text-nav-link hover:text-inverse hover:bg-[rgba(247,236,217,0.06)] transition-all duration-200 active:scale-95"
+        style={{ background: isOpen ? "rgba(247,236,217,0.08)" : "transparent" }}
       >
         {isOpen ? (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

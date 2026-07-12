@@ -6,7 +6,7 @@ import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { WhySection } from "@/components/home/WhySection";
 import { WhyMushrooms } from "@/components/home/WhyMushrooms";
 import { Testimonials } from "@/components/home/Testimonials";
-import { Newsletter } from "@/components/home/Newsletter";
+import { QuoteSection } from "@/components/home/QuoteSection";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
         <WhySection />
         <WhyMushrooms />
         <Testimonials />
-        <Newsletter />
+        <QuoteSection />
       </main>
       <Footer />
     </>

@@ -3,6 +3,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { FaqAccordion } from '@/components/faq/FaqAccordion'
+import { Reveal } from '@/components/motion/Reveal'
 
 export const metadata: Metadata = {
   title: 'FAQ — Manico Harvest',
@@ -51,17 +52,18 @@ export default function FaqPage() {
         <section className="py-16 sm:py-20">
           <div className="mx-auto w-full max-w-[760px] px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col gap-12">
-              {FAQ_SECTIONS.map((section) => (
-                <div key={section.heading}>
+              {FAQ_SECTIONS.map((section, i) => (
+                <Reveal key={section.heading} delay={i * 100}>
                   <h2 className="font-bold text-xl mb-5" style={{ color: 'var(--color-brand-primary)' }}>
                     {section.heading}
                   </h2>
                   <FaqAccordion items={section.items} />
-                </div>
+                </Reveal>
               ))}
             </div>
 
-            <div
+            <Reveal
+              variant="scale"
               className="mt-12 rounded-2xl p-8 text-center"
               style={{ background: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)' }}
             >
@@ -73,12 +75,12 @@ export default function FaqPage() {
               </p>
               <a
                 href="/contact"
-                className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90"
+                className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ background: 'var(--color-brand-accent)', color: 'var(--color-text-inverse)', padding: '11px 22px', fontSize: '14px' }}
               >
                 Contact Support
               </a>
-            </div>
+            </Reveal>
           </div>
         </section>
       </main>

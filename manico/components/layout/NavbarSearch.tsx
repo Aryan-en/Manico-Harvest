@@ -35,8 +35,7 @@ export function NavbarSearch() {
       <button
         aria-label="Search products"
         onClick={() => setIsOpen(true)}
-        className="hidden sm:flex items-center justify-center w-10 h-10 rounded-lg text-nav-link hover:text-inverse transition-colors"
-        style={{ transitionDuration: 'var(--duration-fast)' }}
+        className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full text-nav-link hover:text-inverse hover:bg-[rgba(247,236,217,0.06)] transition-all duration-200 active:scale-95"
       >
         <Search size={18} aria-hidden="true" />
       </button>

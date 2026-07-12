@@ -20,7 +20,7 @@ export default function TrackOrderPage() {
           description="Enter your order number and the email you used at checkout to see the latest status."
         />
         <section className="py-16 sm:py-20">
-          <div className="mx-auto w-full max-w-[640px] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-[640px] px-4 sm:px-6 lg:px-8 animate-fade-in">
             <TrackOrderForm />
           </div>
         </section>

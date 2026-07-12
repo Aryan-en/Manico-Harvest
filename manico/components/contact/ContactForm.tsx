@@ -109,7 +109,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-lg"
         style={{ background: 'var(--color-brand-accent)', color: 'var(--color-text-inverse)' }}
       >
         {loading && <Loader2 size={16} className="animate-spin" aria-hidden="true" />}

@@ -4,6 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ContactForm } from '@/components/contact/ContactForm'
+import { Reveal } from '@/components/motion/Reveal'
 
 export const metadata: Metadata = {
   title: 'Contact Us — Manico Harvest',
@@ -33,13 +34,13 @@ export default function ContactPage() {
             <div className="flex flex-col lg:flex-row gap-12">
 
               {/* Contact info */}
-              <div className="w-full lg:w-80 shrink-0">
+              <Reveal variant="fade" as="div" className="w-full lg:w-80 shrink-0">
                 <h2 className="font-bold text-lg mb-6" style={{ color: 'var(--color-brand-primary)' }}>
                   Contact Details
                 </h2>
                 <div className="flex flex-col gap-5">
-                  {CONTACT_INFO.map(({ icon: Icon, label, value }) => (
-                    <div key={label} className="flex items-start gap-4">
+                  {CONTACT_INFO.map(({ icon: Icon, label, value }, i) => (
+                    <Reveal key={label} delay={i * 70} className="flex items-start gap-4">
                       <span
                         className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
                         style={{ background: 'var(--color-bg-subtle)', color: 'var(--color-brand-accent)' }}
@@ -54,18 +55,19 @@ export default function ContactPage() {
                           {value}
                         </p>
                       </div>
-                    </div>
+                    </Reveal>
                   ))}
                 </div>
-              </div>
+              </Reveal>
 
               {/* Form */}
-              <div
+              <Reveal
+                variant="scale"
                 className="flex-1 rounded-2xl p-6 sm:p-8"
                 style={{ background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-md)' }}
               >
                 <ContactForm />
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>

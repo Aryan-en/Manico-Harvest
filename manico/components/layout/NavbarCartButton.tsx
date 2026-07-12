@@ -11,8 +11,7 @@ export function NavbarCartButton() {
     <button
       onClick={openDrawer}
       aria-label={`Shopping cart — ${count} item${count !== 1 ? 's' : ''}`}
-      className="relative flex items-center justify-center w-10 h-10 rounded-lg text-nav-link hover:text-inverse transition-colors"
-      style={{ transitionDuration: 'var(--duration-fast)' }}
+      className="relative flex items-center justify-center w-10 h-10 rounded-full text-nav-link hover:text-inverse hover:bg-[rgba(247,236,217,0.06)] transition-all duration-200 active:scale-95"
     >
       <ShoppingBag size={18} aria-hidden="true" />
       {count > 0 && (

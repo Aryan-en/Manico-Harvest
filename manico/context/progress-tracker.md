@@ -72,6 +72,7 @@
 | Policy pages: Shipping, Returns, Privacy, Terms | `complete` | `app/shipping`, `app/returns`, `app/privacy-policy`, `app/terms-of-service`. Shared `components/layout/PolicyContent.tsx`. Fixes previously broken Footer links. |
 | Track Order + Blog placeholder | `complete` | `app/track` (form, graceful "not found" state — no orders table wired yet); `app/blog` ("coming soon" empty state). |
 | Mobile nav: auth state (sign in/out) | `complete` | `NavbarMobileMenu.tsx` — previously had no way to sign in/out on mobile since `AuthNavButton` is `hidden lg:flex`. Now shows Sign In/Sign Up or user name + Sign Out. |
+| Site-wide animation system | `complete` | Dependency-free scroll-reveal via `hooks/use-in-view.ts` (IntersectionObserver) + `components/motion/Reveal.tsx`; CSS keyframes/utilities in `globals.css` (`animate-fade-in`, `animate-scale-in`, `animate-float`, `animate-shimmer`). Fully respects `prefers-reduced-motion` (disables all animation/transition durations). Applied across Home, Shop, PDP, About, Benefits, Contact, FAQ, Recipes, policy pages, 404/error pages, cart drawer, mobile nav drawer, search modal. Loading skeletons upgraded from `animate-pulse` to shimmer sweep. Next.js 16's native View Transitions API (`experimental.viewTransition`) was evaluated but not enabled — still experimental and too high-risk to flip globally without per-route visual regression testing. |
 
 ---
 

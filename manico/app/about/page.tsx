@@ -92,7 +92,7 @@ export default function AboutPage() {
                       {value.description}
                     </p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -101,14 +101,14 @@ export default function AboutPage() {
         {/* Timeline */}
         <section className="py-16 sm:py-20">
           <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <Reveal className="text-center mb-12">
               <p className="text-xs font-bold tracking-[0.2em] mb-3" style={{ color: 'var(--color-brand-accent)' }}>
                 THE JOURNEY
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: 'var(--color-brand-primary)' }}>
                 How We Got Here
               </h2>
-            </div>
+            </Reveal>
             <div className="relative pl-8">
               <div
                 className="absolute left-[9px] top-2 bottom-2 w-px"
@@ -116,8 +116,8 @@ export default function AboutPage() {
                 aria-hidden="true"
               />
               <div className="flex flex-col gap-10">
-                {TIMELINE.map((item) => (
-                  <div key={item.year} className="relative">
+                {TIMELINE.map((item, i) => (
+                  <Reveal key={item.year} delay={i * 90} className="relative">
                     <span
                       className="absolute -left-8 top-1 w-5 h-5 rounded-full flex items-center justify-center"
                       style={{ background: 'var(--color-brand-accent)' }}
@@ -134,7 +134,7 @@ export default function AboutPage() {
                     <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
                       {item.text}
                     </p>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -143,13 +143,13 @@ export default function AboutPage() {
 
         {/* CTA */}
         <section className="py-16" style={{ background: 'var(--color-brand-primary)' }}>
-          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal variant="scale" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--color-text-inverse)' }}>
               Ready to taste the difference?
             </h2>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90"
+              className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
               style={{ background: 'var(--color-brand-accent)', color: 'var(--color-text-inverse)', padding: '13px 28px' }}
             >
               Shop All Products
@@ -157,7 +157,7 @@ export default function AboutPage() {
                 <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
               </svg>
             </Link>
-          </div>
+          </Reveal>
         </section>
       </main>
       <Footer />

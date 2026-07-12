@@ -20,9 +20,9 @@ export default function ShopLoading() {
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
             {/* Sidebar skeleton */}
             <div className="w-full lg:w-64 shrink-0 space-y-3">
-              <div className="h-10 rounded-xl animate-pulse" style={{ background: 'var(--color-bg-subtle)' }} />
+              <div className="h-10 rounded-xl animate-shimmer" />
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="h-9 rounded-lg animate-pulse" style={{ background: 'var(--color-bg-subtle)' }} />
+                <div key={i} className="h-9 rounded-lg animate-shimmer" />
               ))}
             </div>
             {/* Grid skeleton */}

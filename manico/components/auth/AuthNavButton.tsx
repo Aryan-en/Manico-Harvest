@@ -27,11 +27,10 @@ export function AuthNavButton() {
         <button
           onClick={handleLogout}
           aria-label="Sign out"
-          className="flex items-center gap-1.5 rounded-lg text-sm font-semibold text-nav-link hover:text-inverse transition-colors active:scale-[0.98]"
+          className="flex items-center gap-1.5 rounded-full text-sm font-semibold text-nav-link hover:text-inverse hover:bg-[rgba(247,236,217,0.06)] transition-all duration-200 active:scale-[0.98]"
           style={{
-            padding: '8px 14px',
-            border: '1px solid rgba(247,236,217,0.25)',
-            transitionDuration: 'var(--duration-fast)',
+            padding: '8px 16px',
+            border: '1px solid rgba(247,236,217,0.2)',
           }}
         >
           <LogOut size={14} />
@@ -45,8 +44,8 @@ export function AuthNavButton() {
     <div className="hidden lg:flex items-center gap-2 ml-2">
       <Link
         href="/sign-up"
-        className="flex items-center rounded-lg text-sm font-semibold bg-accent hover:bg-accent-hover text-inverse active:scale-[0.98] transition-all"
-        style={{ padding: '8px 18px', transitionDuration: 'var(--duration-fast)' }}
+        className="flex items-center rounded-full text-sm font-semibold bg-accent hover:bg-accent-hover text-inverse active:scale-[0.98] transition-all duration-200"
+        style={{ padding: '8px 20px' }}
       >
         Sign Up
       </Link>

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { PageHeader } from '@/components/layout/PageHeader'
+import { Reveal } from '@/components/motion/Reveal'
 
 export const metadata: Metadata = {
   title: 'Benefits — Manico Harvest',
@@ -62,11 +63,12 @@ export default function BenefitsPage() {
         <section className="py-16 sm:py-20">
           <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {BENEFITS.map((benefit) => (
-                <div
+              {BENEFITS.map((benefit, i) => (
+                <Reveal
                   key={benefit.title}
-                  className="flex flex-col rounded-2xl p-6"
-                  style={{ background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}
+                  delay={i * 80}
+                  className="flex flex-col rounded-2xl p-6 transition-all hover:-translate-y-1 hover:shadow-md"
+                  style={{ background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)', transitionDuration: 'var(--duration-base)' }}
                 >
                   <div
                     className="flex items-center justify-center w-12 h-12 rounded-xl text-2xl mb-4"
@@ -92,20 +94,20 @@ export default function BenefitsPage() {
                       </span>
                     ))}
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
 
         <section className="py-16" style={{ background: 'var(--color-brand-primary)' }}>
-          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal variant="scale" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--color-text-inverse)' }}>
               Find the right product for your goals
             </h2>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90"
+              className="inline-flex items-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
               style={{ background: 'var(--color-brand-accent)', color: 'var(--color-text-inverse)', padding: '13px 28px' }}
             >
               Explore Products
@@ -113,7 +115,7 @@ export default function BenefitsPage() {
                 <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
               </svg>
             </Link>
-          </div>
+          </Reveal>
         </section>
       </main>
       <Footer />
