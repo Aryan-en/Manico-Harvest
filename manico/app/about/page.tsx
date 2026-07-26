@@ -4,6 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Reveal } from '@/components/motion/Reveal'
+import { FirstEventStory } from '@/components/about/FirstEventStory'
 
 export const metadata: Metadata = {
   title: 'Our Story — Manico Harvest',
@@ -33,7 +34,8 @@ const TIMELINE = [
   { year: '2022', title: 'The idea', text: 'Started in a home kitchen in Bengaluru, reformulating grandmother’s Sattu recipe for modern nutrition needs.' },
   { year: '2023', title: 'First harvest', text: 'Launched Moringa Sattu and Multi Millet Chilla mix to friends and family — sold out in 48 hours.' },
   { year: '2024', title: 'Growing the range', text: 'Introduced Mushroom Coffee and functional mushroom-based drinks, partnering directly with Himalayan growers.' },
-  { year: '2026', title: 'Manico Harvest today', text: 'Serving thousands of households across India with five core products — and growing.' },
+  { year: 'July 2026', title: 'Our first exhibition', text: 'Took our first public step as Hydration Partner at the Rain Run Haldwani Half Marathon — meeting the runners, athletes and families who became part of our story.' },
+  { year: 'Today', title: 'Manico Harvest now', text: 'Five core products, a growing community, and the same belief we started with — clean, functional food, made simply.' },
 ]
 
 export default function AboutPage() {
@@ -140,6 +142,9 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* First event story */}
+        <FirstEventStory />
 
         {/* CTA */}
         <section className="py-16" style={{ background: 'var(--color-brand-primary)' }}>
