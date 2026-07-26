@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { WhatsAppChatbot } from "@/components/chatbot/WhatsAppChatbot";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({
         <AuthProvider>
           {children}
           <CartDrawer />
+          <WhatsAppChatbot />
         </AuthProvider>
       </body>
     </html>
