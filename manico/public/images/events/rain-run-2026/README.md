@@ -1,38 +1,43 @@
 # Rain Run Haldwani 2026 — event photos
 
-Drop the event photos into this folder using **exactly these filenames**. They are
-referenced by `components/about/FirstEventStory.tsx` and rendered on `/about`.
+Photos from Manico Harvest's first public exhibition (19 July 2026), rendered on `/about`
+by `components/about/FirstEventStory.tsx`.
 
-| Filename | Photo to use | Rendered as |
+## In use
+
+| File | Photo | Dimensions | Where it appears |
+|---|---|---|---|
+| `announcement-poster.jpg` | Cream/green "Hey Haldwani!" poster | 620×906 | Hero, beside opening narrative |
+| `stall-athletes.jpg` | Full team plus athletes behind the stall | 914×804 | Gallery |
+| `moringa-sattu.jpg` | Founder holding the Moringa Sattu pouch | 602×806 | Gallery |
+| `founder-backdrop.jpg` | Founder at the 23 Tri Club backdrop | 632×874 | Gallery |
+| `young-runner.jpg` | Founder with the young medal-winning runner | 590×826 | Gallery |
+| `hamper-group.jpg` | Hamper presented to a group of athletes | 604×534 | Gallery |
+| `product-lineup.jpg` | All five products on the table | 614×624 | Gallery |
+| `family-stall.jpg` | Father, uncle and founder behind the stall | 614×758 | Gallery |
+| `finish-arch.jpg` | Founder under the Rain Run finish arch | 600×542 | Gallery |
+| `hamper-stage.jpg` | Hamper presented on stage | 928×820 | "Healthy Hampers" section |
+| `family-team.jpg` | Father, uncle, brother and founder together | 910×986 | "The Backbone" section |
+
+## Available but unused
+
+Kept in the repo in case they're wanted later — not currently referenced:
+
+| File | Photo | Why unused |
 |---|---|---|
-| `announcement-poster.jpg` | The cream/green Manico Harvest poster — *"Hey Haldwani! Come explore a range of healthy & easy to make Breakfast & Drinks"* | Hero, portrait 3:4 |
-| `stall-athletes.jpg` | Wide group shot — full team plus athletes/runners standing behind the stall | Gallery, wide 16:10 |
-| `moringa-sattu.jpg` | Founder holding up the Moringa Sattu pouch | Gallery, portrait 3:4 |
-| `founder-backdrop.jpg` | Founder beside the 23 Tri Club / Shivalik International School backdrop | Gallery, portrait 3:4 |
-| `young-runner.jpg` | Founder with the young boy runner wearing medals | Gallery, portrait 3:4 |
-| `finish-arch.jpg` | Founder under the Rain Run Haldwani / PSP Hospital finish arch | Gallery, portrait 3:4 |
-| `hamper-group.jpg` | Group of six presenting the hamper in front of the Dainik Jagran backdrop | Gallery, wide 16:10 |
-| `product-lineup.jpg` | Founder seated behind all five products laid out on the table | Gallery, wide 16:10 |
-| `hamper-stage.jpg` | Hamper being presented on stage to the woman in the yellow 23 Tri Club tee | "Healthy Hampers" section, 4:3 |
-| `family-stall.jpg` | The three of you at the stall — father, uncle and founder in the white polos | "The Backbone" section, 4:3 |
+| `poster-hydration-partner.jpg` | Blue sponsor-logos poster | Mostly other brands' logos |
+| `poster-rain-run.jpg` | "Rain Run 4 Edition" poster | 23 Tri Club branding, not ours |
+| `product-lineup-rain.png` | Product lineup shot in heavier rain | Near-duplicate of `product-lineup.jpg` |
+
+To add one, append an entry to the `GALLERY` array in `FirstEventStory.tsx` with its real
+pixel `w`/`h` — the masonry layout uses intrinsic dimensions, so no crop math is needed.
 
 ## Notes
 
-- **All ten are required** — any missing file renders as a broken image on `/about`.
-- `.jpg` extension is expected. If your files are `.jpeg` or `.png`, either rename them
-  or update the paths in `FirstEventStory.tsx`.
-- Images are cropped with `object-cover`, so the subject should be reasonably centred.
-  The portrait slots (3:4) crop the sides; the wide slots (16:10) crop top and bottom.
-- Compress before committing — aim for **under ~400 KB each**. `next/image` will
-  serve optimised WebP/AVIF variants, but the source file still ships in the repo.
-
-## Photos not currently used
-
-Three images from the original set aren't referenced, to keep the gallery tight:
-
-- The blue *"Hydration Partner"* sponsor-logos poster
-- The *"Rain Run 4 Edition"* event poster (23 Tri Club branding)
-- The duplicate product-lineup shot taken in the rain
-
-Add them by appending entries to the `GALLERY` array in `FirstEventStory.tsx`
-(keep each row's `lg:col-span-*` values adding up to 12).
+- The gallery is a **CSS masonry layout** (`columns-*` + `break-inside-avoid`). Every photo
+  keeps its natural aspect ratio — nothing is cropped, so no faces get cut off.
+- `width`/`height` on each `<Image>` must match the real file dimensions. They reserve exact
+  layout space and prevent cumulative layout shift.
+- If you replace a photo with one of different dimensions, **update `w`/`h` in the component**
+  to match, or the layout will shift as it loads.
+- `next/image` serves optimised WebP/AVIF at request time; these source files are the originals.

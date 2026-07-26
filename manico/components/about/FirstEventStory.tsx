@@ -4,56 +4,66 @@ import { Reveal } from '@/components/motion/Reveal'
 
 const IMG = '/images/events/rain-run-2026'
 
-/** Editorial photo grid — spans add to 12 per row on large screens. */
+/**
+ * Masonry gallery. Intrinsic width/height are the real pixel dimensions of each
+ * source file — nothing is cropped, and the browser reserves exact space (no CLS).
+ */
 const GALLERY = [
   {
     src: `${IMG}/stall-athletes.jpg`,
-    alt: 'The Manico Harvest team with runners and athletes at the stall',
+    w: 914,
+    h: 804,
+    alt: 'The Manico Harvest team with runners and athletes gathered around the stall',
     caption: 'Runners, athletes and curious first-timers at the stall',
-    span: 'lg:col-span-8',
-    ratio: '16 / 10',
   },
   {
     src: `${IMG}/moringa-sattu.jpg`,
+    w: 602,
+    h: 806,
     alt: 'Founder holding a pack of Moringa Sattu at the event stall',
     caption: 'Moringa Sattu, meeting its first customers',
-    span: 'lg:col-span-4',
-    ratio: '3 / 4',
   },
   {
     src: `${IMG}/founder-backdrop.jpg`,
-    alt: 'Founder at the 23 Tri Club event backdrop',
+    w: 632,
+    h: 874,
+    alt: 'Founder beside the 23 Tri Club event backdrop before the race',
     caption: 'Before the gates opened',
-    span: 'lg:col-span-4',
-    ratio: '3 / 4',
   },
   {
     src: `${IMG}/young-runner.jpg`,
-    alt: 'Founder with a young medal-winning runner',
+    w: 590,
+    h: 826,
+    alt: 'Founder with a young runner wearing his finisher medals',
     caption: 'The next generation of runners',
-    span: 'lg:col-span-4',
-    ratio: '3 / 4',
-  },
-  {
-    src: `${IMG}/finish-arch.jpg`,
-    alt: 'Founder at the Rain Run Haldwani finish arch',
-    caption: 'The finish arch, in the rain',
-    span: 'lg:col-span-4',
-    ratio: '3 / 4',
   },
   {
     src: `${IMG}/hamper-group.jpg`,
-    alt: 'Presenting a Manico Harvest Healthy Hamper to athletes on stage',
+    w: 604,
+    h: 534,
+    alt: 'Presenting a Manico Harvest Healthy Hamper to a group of athletes',
     caption: 'Healthy Hampers, handed over with one request — honest feedback',
-    span: 'lg:col-span-7',
-    ratio: '16 / 10',
   },
   {
     src: `${IMG}/product-lineup.jpg`,
-    alt: 'The full Manico Harvest product range displayed at the event',
+    w: 614,
+    h: 624,
+    alt: 'The full Manico Harvest product range laid out at the event',
     caption: 'Five products. One dream, finally on a table.',
-    span: 'lg:col-span-5',
-    ratio: '16 / 10',
+  },
+  {
+    src: `${IMG}/family-stall.jpg`,
+    w: 614,
+    h: 758,
+    alt: 'The founder with her father and uncle behind the Manico Harvest stall',
+    caption: 'Holding the fort, all day, in the rain',
+  },
+  {
+    src: `${IMG}/finish-arch.jpg`,
+    w: 600,
+    h: 542,
+    alt: 'Founder under the Rain Run Haldwani finish arch',
+    caption: 'The finish arch, in the rain',
   },
 ] as const
 
@@ -85,24 +95,19 @@ export function FirstEventStory(): ReactElement {
 
         {/* ── Hero: poster + opening narrative ── */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center mb-20">
-          <Reveal variant="scale" className="w-full lg:w-[42%] shrink-0">
-            <div
-              className="relative w-full rounded-3xl overflow-hidden"
+          <Reveal variant="scale" className="w-full max-w-[420px] mx-auto lg:mx-0 lg:w-[38%] shrink-0">
+            <Image
+              src={`${IMG}/announcement-poster.jpg`}
+              alt="Manico Harvest poster announcing their stall at the Rain Run Haldwani Half Marathon"
+              width={620}
+              height={906}
+              className="w-full h-auto rounded-3xl"
               style={{
-                aspectRatio: '3 / 4',
-                background: 'var(--color-bg-subtle)',
-                boxShadow: '0 24px 48px rgba(42,70,16,0.14)',
+                boxShadow: '0 24px 48px rgba(42,70,16,0.16)',
                 border: '1px solid var(--color-border)',
               }}
-            >
-              <Image
-                src={`${IMG}/announcement-poster.jpg`}
-                alt="Manico Harvest announcement poster for the Rain Run Haldwani Half Marathon"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 42vw"
-              />
-            </div>
+              sizes="(max-width: 1024px) 90vw, 38vw"
+            />
           </Reveal>
 
           <Reveal className="flex-1 min-w-0">
@@ -120,7 +125,6 @@ export function FirstEventStory(): ReactElement {
               It was Manico Harvest&apos;s first step into the real world.
             </p>
 
-            {/* Event meta */}
             <dl className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--color-border)' }}>
               {EVENT_META.map((meta) => (
                 <div key={meta.label} className="p-4" style={{ background: 'var(--color-bg-surface)' }}>
@@ -138,7 +142,7 @@ export function FirstEventStory(): ReactElement {
 
         {/* ── The night before ── */}
         <Reveal
-          className="relative rounded-3xl px-6 py-10 sm:px-12 sm:py-14 mb-20 text-center"
+          className="rounded-3xl px-6 py-10 sm:px-12 sm:py-14 mb-20 text-center"
           style={{ background: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)' }}
         >
           <p className="text-xs font-bold tracking-[0.2em] mb-4" style={{ color: 'var(--color-brand-accent)' }}>
@@ -164,39 +168,37 @@ export function FirstEventStory(): ReactElement {
           </h3>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-5 mb-16">
+        {/* Masonry — natural aspect ratios, nothing cropped */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5 mb-16">
           {GALLERY.map((photo, i) => (
             <Reveal
               key={photo.src}
               delay={Math.min(i, 6) * 70}
-              className={`group relative overflow-hidden rounded-2xl ${photo.span}`}
+              className="group relative overflow-hidden rounded-2xl mb-4 sm:mb-5 break-inside-avoid"
               style={{
-                background: 'var(--color-bg-subtle)',
                 border: '1px solid var(--color-border)',
                 boxShadow: 'var(--shadow-sm)',
               }}
             >
-              <div className="relative w-full" style={{ aspectRatio: photo.ratio }}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover transition-transform group-hover:scale-[1.04]"
-                  style={{ transitionDuration: 'var(--duration-slow)' }}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-                {/* Caption overlay */}
-                <div
-                  className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-2 transition-all group-hover:opacity-100 group-hover:translate-y-0"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(26,26,26,0.82) 0%, transparent 100%)',
-                    transitionDuration: 'var(--duration-base)',
-                  }}
-                >
-                  <p className="text-xs sm:text-sm font-medium" style={{ color: 'var(--color-text-inverse)' }}>
-                    {photo.caption}
-                  </p>
-                </div>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.w}
+                height={photo.h}
+                className="w-full h-auto transition-transform group-hover:scale-[1.04]"
+                style={{ transitionDuration: 'var(--duration-slow)' }}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-2 transition-all group-hover:opacity-100 group-hover:translate-y-0"
+                style={{
+                  background: 'linear-gradient(to top, rgba(26,26,26,0.85) 0%, transparent 100%)',
+                  transitionDuration: 'var(--duration-base)',
+                }}
+              >
+                <p className="text-xs sm:text-sm font-medium" style={{ color: 'var(--color-text-inverse)' }}>
+                  {photo.caption}
+                </p>
               </div>
             </Reveal>
           ))}
@@ -218,7 +220,7 @@ export function FirstEventStory(): ReactElement {
           </p>
         </Reveal>
 
-        {/* ── Honest feedback ── */}
+        {/* ── Healthy Hampers ── */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center mb-20">
           <Reveal className="flex-1 min-w-0 order-2 lg:order-1">
             <p className="text-xs font-bold tracking-[0.2em] mb-3" style={{ color: 'var(--color-brand-accent)' }}>
@@ -232,10 +234,7 @@ export function FirstEventStory(): ReactElement {
               fitness enthusiasts, and passionate individuals who believe in healthy living just as
               much as we do.
             </p>
-            <blockquote
-              className="pl-5 py-1 my-6"
-              style={{ borderLeft: '3px solid var(--color-brand-accent)' }}
-            >
+            <blockquote className="pl-5 py-1 my-6" style={{ borderLeft: '3px solid var(--color-brand-accent)' }}>
               <p className="text-lg sm:text-xl font-semibold italic" style={{ color: 'var(--color-brand-primary)', lineHeight: '1.6' }}>
                 &ldquo;Taste them honestly. Tell us what you truly think.&rdquo;
               </p>
@@ -246,46 +245,30 @@ export function FirstEventStory(): ReactElement {
           </Reveal>
 
           <Reveal variant="scale" className="w-full lg:w-[46%] shrink-0 order-1 lg:order-2">
-            <div
-              className="relative w-full rounded-3xl overflow-hidden"
-              style={{
-                aspectRatio: '4 / 3',
-                background: 'var(--color-bg-subtle)',
-                boxShadow: 'var(--shadow-lg)',
-                border: '1px solid var(--color-border)',
-              }}
-            >
-              <Image
-                src={`${IMG}/hamper-stage.jpg`}
-                alt="Presenting a Manico Harvest Healthy Hamper on stage at the Rain Run Haldwani"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 46vw"
-              />
-            </div>
+            <Image
+              src={`${IMG}/hamper-stage.jpg`}
+              alt="Presenting a Manico Harvest Healthy Hamper on stage at the Rain Run Haldwani"
+              width={928}
+              height={820}
+              className="w-full h-auto rounded-3xl"
+              style={{ boxShadow: 'var(--shadow-lg)', border: '1px solid var(--color-border)' }}
+              sizes="(max-width: 1024px) 100vw, 46vw"
+            />
           </Reveal>
         </div>
 
-        {/* ── The family behind the stall ── */}
+        {/* ── The backbone ── */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center mb-20">
           <Reveal variant="scale" className="w-full lg:w-[46%] shrink-0">
-            <div
-              className="relative w-full rounded-3xl overflow-hidden"
-              style={{
-                aspectRatio: '4 / 3',
-                background: 'var(--color-bg-subtle)',
-                boxShadow: 'var(--shadow-lg)',
-                border: '1px solid var(--color-border)',
-              }}
-            >
-              <Image
-                src={`${IMG}/family-stall.jpg`}
-                alt="The founder with her father and uncle at the Manico Harvest stall"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 46vw"
-              />
-            </div>
+            <Image
+              src={`${IMG}/family-team.jpg`}
+              alt="The founder with her father, uncle and younger brother at the Manico Harvest stall"
+              width={910}
+              height={986}
+              className="w-full h-auto rounded-3xl"
+              style={{ boxShadow: 'var(--shadow-lg)', border: '1px solid var(--color-border)' }}
+              sizes="(max-width: 1024px) 100vw, 46vw"
+            />
           </Reveal>
 
           <Reveal className="flex-1 min-w-0">
@@ -308,7 +291,7 @@ export function FirstEventStory(): ReactElement {
           </Reveal>
         </div>
 
-        {/* ── Thank you ── */}
+        {/* ── Gratitude ── */}
         <Reveal
           className="rounded-3xl px-6 py-10 sm:px-12 sm:py-14 mb-16 text-center"
           style={{ background: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)' }}
@@ -329,7 +312,7 @@ export function FirstEventStory(): ReactElement {
           </p>
         </Reveal>
 
-        {/* ── Closing statement ── */}
+        {/* ── Closing ── */}
         <Reveal variant="scale" className="max-w-3xl mx-auto text-center">
           <div className="flex flex-col gap-3 mb-8">
             <p className="text-lg sm:text-xl font-semibold" style={{ color: 'var(--color-brand-primary)' }}>
@@ -341,10 +324,7 @@ export function FirstEventStory(): ReactElement {
             </p>
           </div>
 
-          <div
-            className="rounded-3xl px-6 py-10 sm:px-12"
-            style={{ background: 'var(--color-brand-primary)' }}
-          >
+          <div className="rounded-3xl px-6 py-10 sm:px-12" style={{ background: 'var(--color-brand-primary)' }}>
             <svg
               width="28"
               height="28"
@@ -356,10 +336,7 @@ export function FirstEventStory(): ReactElement {
             >
               <path d="M9.5 4C6.5 4 4 6.5 4 9.5c0 2.8 2.2 5.1 5 5.5-.3 2.4-2.2 4.3-4.6 4.7l.5 2.3c4-.7 7.1-4.2 7.1-8.5V9.5C12 6.5 9.5 4 9.5 4zm10 0C16.5 4 14 6.5 14 9.5c0 2.8 2.2 5.1 5 5.5-.3 2.4-2.2 4.3-4.6 4.7l.5 2.3c4-.7 7.1-4.2 7.1-8.5V9.5C22 6.5 19.5 4 19.5 4z" />
             </svg>
-            <p
-              className="text-xl sm:text-2xl font-bold mb-6"
-              style={{ color: 'var(--color-text-inverse)', lineHeight: '1.6' }}
-            >
+            <p className="text-xl sm:text-2xl font-bold mb-6" style={{ color: 'var(--color-text-inverse)', lineHeight: '1.6' }}>
               Our first event wasn&apos;t just an exhibition. It was the first step of a dream that began
               in a small mushroom hut — and is only just beginning.
             </p>
