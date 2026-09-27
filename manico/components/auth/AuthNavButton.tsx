@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { LogOut, User } from 'lucide-react'
 import { useAuthStore } from '@/store/auth-store'
@@ -40,15 +39,5 @@ export function AuthNavButton() {
     )
   }
 
-  return (
-    <div className="hidden lg:flex items-center gap-2 ml-2">
-      <Link
-        href="/sign-up"
-        className="flex items-center rounded-full text-sm font-semibold bg-accent hover:bg-accent-hover text-inverse active:scale-[0.98] transition-all duration-200"
-        style={{ padding: '8px 20px' }}
-      >
-        Sign Up
-      </Link>
-    </div>
-  )
+  return null
 }

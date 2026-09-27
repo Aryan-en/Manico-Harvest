@@ -6,7 +6,6 @@ import type { ReactElement } from "react";
 import { BrandLogo } from "./BrandLogo";
 import { NavbarMobileMenu } from "./NavbarMobileMenu";
 import { AuthNavButton } from "@/components/auth/AuthNavButton";
-import { NavbarCartButton } from "./NavbarCartButton";
 import { NavbarSearch } from "./NavbarSearch";
 
 const NAV_LINKS = [
@@ -76,8 +75,6 @@ export function Navbar(): ReactElement {
             {/* Actions */}
             <div className="flex items-center gap-2">
               <NavbarSearch />
-
-              <NavbarCartButton />
 
               <Link
                 href="/shop"

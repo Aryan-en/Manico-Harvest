@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { insforge } from '@/lib/insforge'
 import type { Product } from '@/types/product'
 import { AddToCartButton } from '@/components/product/AddToCartButton'
+import { AmazonBuyButton } from '@/components/product/AmazonBuyButton'
+import { getAmazonUrl } from '@/lib/data/amazon-links'
 import { ProductCard } from '@/components/product/ProductCard'
+import { ProductImageGallery } from '@/components/product/ProductImageGallery'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Reveal } from '@/components/motion/Reveal'
@@ -60,6 +62,7 @@ export default async function PDPPage({ params }: Params) {
   const related = await getRelated(product.category_id, product.id)
 
   const inStock = product.stock > 0
+  const amazonUrl = getAmazonUrl(product.slug) || getAmazonUrl(product.id)
 
   return (
     <>
@@ -88,47 +91,15 @@ export default async function PDPPage({ params }: Params) {
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-12">
 
-            {/* Image */}
+            {/* Image Gallery */}
             <div className="w-full lg:w-1/2">
-              <div
-                className="group relative w-full rounded-2xl overflow-hidden animate-scale-in"
-                style={{
-                  aspectRatio: '1/1',
-                  background: 'linear-gradient(145deg, #f5ead6 0%, var(--color-bg-base) 100%)',
-                  border: '1px solid var(--color-border)',
-                }}
-              >
-                {product.badge && (
-                  <span
-                    className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full text-xs font-bold tracking-wider"
-                    style={{
-                      background: product.badge_variant === 'green'
-                        ? 'var(--color-brand-primary)'
-                        : 'var(--color-brand-accent)',
-                      color: 'var(--color-text-inverse)',
-                    }}
-                  >
-                    {product.badge}
-                  </span>
-                )}
-                {product.image_url ? (
-                  <Image
-                    src={product.image_url}
-                    alt={product.name}
-                    fill
-                    priority
-                    className="object-contain p-8 transition-transform group-hover:scale-105"
-                    style={{ transitionDuration: 'var(--duration-slow)' }}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" style={{ color: 'var(--color-border-strong)' }} aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
-                    </svg>
-                  </div>
-                )}
-              </div>
+              <ProductImageGallery
+                productName={product.name}
+                productSlug={product.slug}
+                primaryImageUrl={product.image_url}
+                badge={product.badge}
+                badgeVariant={product.badge_variant}
+              />
             </div>
 
             {/* Details */}
@@ -207,28 +178,42 @@ export default async function PDPPage({ params }: Params) {
                 </div>
               </div>
 
-              {/* Add to Cart */}
-              {inStock ? (
-                <AddToCartButton
-                  product={{
-                    productId: product.id,
-                    name: product.name,
-                    slug: product.slug,
-                    price: Number(product.price),
-                    image_url: product.image_url,
-                    weight: product.weight,
-                  }}
-                  showQuantityPicker
-                />
-              ) : (
-                <button
-                  disabled
-                  className="w-full py-4 rounded-xl text-sm font-semibold opacity-50 cursor-not-allowed"
-                  style={{ background: 'var(--color-bg-subtle)', color: 'var(--color-text-secondary)', border: '1.5px solid var(--color-border)' }}
-                >
-                  Out of Stock
-                </button>
-              )}
+              {/* Purchase Options */}
+              <div className="flex flex-col gap-3">
+                {amazonUrl && (
+                  <AmazonBuyButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      slug: product.slug,
+                    }}
+                    url={amazonUrl}
+                    size="lg"
+                  />
+                )}
+
+                {inStock ? (
+                  <AddToCartButton
+                    product={{
+                      productId: product.id,
+                      name: product.name,
+                      slug: product.slug,
+                      price: Number(product.price),
+                      image_url: product.image_url,
+                      weight: product.weight,
+                    }}
+                    showQuantityPicker
+                  />
+                ) : (
+                  <button
+                    disabled
+                    className="w-full py-4 rounded-xl text-sm font-semibold opacity-50 cursor-not-allowed"
+                    style={{ background: 'var(--color-bg-subtle)', color: 'var(--color-text-secondary)', border: '1.5px solid var(--color-border)' }}
+                  >
+                    Out of Stock
+                  </button>
+                )}
+              </div>
 
               {/* Trust signals */}
               <div className="grid grid-cols-3 gap-4 mt-6">

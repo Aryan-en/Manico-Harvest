@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from 'react'
 
 export function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
   const ref = useRef<T | null>(null)
-  const [isInView, setIsInView] = useState(() => typeof IntersectionObserver === 'undefined')
+  const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
     const node = ref.current
-    if (!node || typeof IntersectionObserver === 'undefined') return
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsInView(true)
+      return
+    }
+    if (!node) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {

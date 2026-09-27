@@ -119,24 +119,16 @@ export function NavbarMobileMenu(): React.ReactElement {
               </div>
             ) : (
               <div
-                className="flex items-center gap-2 px-6 py-4 border-b"
+                className="flex items-center px-6 py-4 border-b"
                 style={{ borderColor: "var(--color-brand-muted)" }}
               >
                 <Link
                   href="/sign-in"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 text-center rounded-lg text-sm font-semibold text-inverse py-2.5"
+                  className="w-full text-center rounded-lg text-sm font-semibold text-inverse py-2.5 transition-colors hover:bg-[rgba(247,236,217,0.06)]"
                   style={{ border: "1px solid rgba(247,236,217,0.25)" }}
                 >
                   Sign In
-                </Link>
-                <Link
-                  href="/sign-up"
-                  onClick={() => setIsOpen(false)}
-                  className="flex-1 text-center rounded-lg text-sm font-semibold text-inverse py-2.5"
-                  style={{ background: "var(--color-brand-accent)" }}
-                >
-                  Sign Up
                 </Link>
               </div>
             )}

@@ -131,7 +131,7 @@ export function Testimonials(): ReactElement {
           }}
         >
           {[
-            { value: "10,000+", label: "Happy Customers" },
+            { value: "1000+", label: "Happy Customers" },
             { value: "4.9 ★", label: "Average Rating" },
             { value: "100%", label: "Natural Ingredients" },
             { value: "5", label: "Premium Products" },

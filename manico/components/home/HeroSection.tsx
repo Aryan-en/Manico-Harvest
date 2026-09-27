@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactElement } from "react";
 import posthog from "posthog-js";
+import { ExternalLink } from "lucide-react";
+import { AmazonIcon } from "@/components/product/AmazonBuyButton";
+import { AMAZON_STORE_URL } from "@/lib/data/amazon-links";
 
 export function HeroSection(): ReactElement {
   return (
@@ -66,7 +69,7 @@ export function HeroSection(): ReactElement {
               <Link
                 href="/shop"
                 className="flex items-center justify-center gap-2 w-full sm:w-auto font-semibold text-inverse rounded-xl transition-all active:scale-[0.98] bg-accent hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-lg"
-                style={{ padding: "14px 28px", transitionDuration: "var(--duration-base)", fontSize: "15px" }}
+                style={{ padding: "14px 26px", transitionDuration: "var(--duration-base)", fontSize: "15px" }}
                 onClick={() => posthog.capture('shop_all_products_clicked', { source: 'hero' })}
               >
                 Shop All Products
@@ -74,11 +77,37 @@ export function HeroSection(): ReactElement {
                   <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                 </svg>
               </Link>
+
+              <a
+                href={AMAZON_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full sm:w-auto font-semibold rounded-xl transition-all active:scale-[0.98] hover:-translate-y-0.5 hover:shadow-md"
+                style={{
+                  background: "#FFFFFF",
+                  color: "var(--color-brand-primary)",
+                  border: "1.5px solid var(--color-border-strong)",
+                  padding: "13px 24px",
+                  fontSize: "15px",
+                  boxShadow: "0 2px 8px rgba(42, 70, 16, 0.06)",
+                  transitionDuration: "var(--duration-base)",
+                }}
+                onClick={() => {
+                  try {
+                    posthog.capture('available_on_amazon_clicked', { source: 'hero', url: AMAZON_STORE_URL })
+                  } catch {}
+                }}
+              >
+                <AmazonIcon className="w-4 h-4 fill-accent shrink-0" />
+                <span>Available on Amazon</span>
+                <ExternalLink size={14} className="opacity-60 shrink-0" />
+              </a>
+
               <Link
                 href="/about"
                 className="flex items-center justify-center gap-2 w-full sm:w-auto font-semibold rounded-xl transition-all active:scale-[0.98] hover:-translate-y-0.5 hover:bg-[rgba(42,70,16,0.06)]"
                 style={{
-                  padding: "13px 28px",
+                  padding: "13px 24px",
                   fontSize: "15px",
                   border: "1.5px solid var(--color-brand-primary)",
                   color: "var(--color-brand-primary)",
@@ -121,7 +150,7 @@ export function HeroSection(): ReactElement {
                 }}
               >
                 <Image
-                  src="/images/products/moringa-sattu.jpg"
+                  src="/images/products/moringa-sattu-front.jpg"
                   alt="Moringa Sattu — 250g plant-based protein"
                   fill
                   className="object-contain p-6"

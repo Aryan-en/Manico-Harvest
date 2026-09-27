@@ -72,10 +72,10 @@ export function WhySection(): ReactElement {
                 }}
               >
                 <Image
-                  src="/images/products/mushroom-moringa-infusion.jpg"
+                  src="/images/products/mushroom-moringa-infusion-front.jpg"
                   alt="Mushroom Moringa Infusion"
                   fill
-                  className="object-contain p-4"
+                  className="object-contain p-2.5"
                   sizes="208px"
                 />
               </div>
@@ -89,10 +89,10 @@ export function WhySection(): ReactElement {
                 }}
               >
                 <Image
-                  src="/images/products/mushroom-quinoa-dosa.jpg"
+                  src="/images/products/mushroom-quinoa-dosa-front.jpg"
                   alt="Mushroom Quinoa Dosa Mix"
                   fill
-                  className="object-contain p-4"
+                  className="object-contain p-2.5"
                   sizes="208px"
                 />
               </div>

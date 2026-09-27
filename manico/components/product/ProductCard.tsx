@@ -3,6 +3,8 @@ import Link from 'next/link'
 import type { ReactElement } from 'react'
 import type { Product } from '@/types/product'
 import { AddToCartButton } from './AddToCartButton'
+import { AmazonBuyButton } from './AmazonBuyButton'
+import { getAmazonUrl } from '@/lib/data/amazon-links'
 
 const BADGE_STYLES: Record<string, React.CSSProperties> = {
   accent: {
@@ -20,6 +22,15 @@ const BADGE_STYLES: Record<string, React.CSSProperties> = {
   },
 }
 
+const PRODUCT_IMAGE_OVERRIDE: Record<string, string> = {
+  'moringa-sattu': '/images/products/moringa-sattu-front.jpg',
+  'multi-millet-chilla': '/images/products/mushroom-chilla-front.jpg',
+  'mushroom-chilla': '/images/products/mushroom-chilla-front.jpg',
+  'mushroom-quinoa-dosa': '/images/products/mushroom-quinoa-dosa-front.jpg',
+  'mushroom-moringa-infusion': '/images/products/mushroom-moringa-infusion-front.jpg',
+  'mushroom-coffee': '/images/products/mushroom-coffee-front.jpg',
+}
+
 type Props = {
   product: Product
   featured?: boolean
@@ -27,6 +38,8 @@ type Props = {
 
 export function ProductCard({ product, featured = false }: Props): ReactElement {
   const badgeStyle = product.badge_variant ? BADGE_STYLES[product.badge_variant] : BADGE_STYLES.muted
+  const amazonUrl = getAmazonUrl(product.slug) || getAmazonUrl(product.id)
+  const imageUrl = PRODUCT_IMAGE_OVERRIDE[product.slug] || product.image_url
 
   return (
     <article
@@ -58,9 +71,9 @@ export function ProductCard({ product, featured = false }: Props): ReactElement 
             {product.badge}
           </span>
         )}
-        {product.image_url ? (
+        {imageUrl ? (
           <Image
-            src={product.image_url}
+            src={imageUrl}
             alt={product.name}
             fill
             className="object-contain transition-transform group-hover/img:scale-105"
@@ -133,7 +146,7 @@ export function ProductCard({ product, featured = false }: Props): ReactElement 
         )}
 
         <div
-          className="flex items-center justify-between mt-auto pt-4"
+          className="flex items-center justify-between gap-2 mt-auto pt-4"
           style={{ borderTop: '1px solid var(--color-border)' }}
         >
           <div>
@@ -146,16 +159,27 @@ export function ProductCard({ product, featured = false }: Props): ReactElement 
               ₹{product.price}
             </p>
           </div>
-          <AddToCartButton
-            product={{
-              productId: product.id,
-              name: product.name,
-              slug: product.slug,
-              price: Number(product.price),
-              image_url: product.image_url,
-              weight: product.weight,
-            }}
-          />
+          {amazonUrl ? (
+            <AmazonBuyButton
+              product={{
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+              }}
+              url={amazonUrl}
+            />
+          ) : (
+            <AddToCartButton
+              product={{
+                productId: product.id,
+                name: product.name,
+                slug: product.slug,
+                price: Number(product.price),
+                image_url: product.image_url,
+                weight: product.weight,
+              }}
+            />
+          )}
         </div>
       </div>
     </article>

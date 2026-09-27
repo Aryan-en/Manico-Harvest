@@ -6,6 +6,8 @@ import { useCartStore } from '@/store/cart-store'
 
 export const BOT_PHONE_NUMBER = '919259740521'
 export const BOT_DISPLAY_PHONE = '+91 9259740521'
+export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/manico.harvest?stkn=NDd0ODQ0Z3U3OGhu'
+export const FACEBOOK_PROFILE_URL = 'https://www.facebook.com/share/1LjFiWGGdR/'
 
 type ProductItem = {
   id: string
@@ -66,8 +68,10 @@ export function WhatsAppChatbot() {
       if (saved) {
         const parsed = JSON.parse(saved)
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed)
-          setUnreadCount(0)
+          setTimeout(() => {
+            setMessages(parsed)
+            setUnreadCount(0)
+          }, 0)
         }
       }
     } catch {
@@ -88,7 +92,7 @@ export function WhatsAppChatbot() {
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-      setUnreadCount(0)
+      setTimeout(() => setUnreadCount(0), 0)
     }
   }, [messages, isOpen, isTyping])
 
@@ -131,7 +135,7 @@ export function WhatsAppChatbot() {
     setShowEmojiPicker(false)
 
     const userMsg: Message = {
-      id: `user_${Date.now()}`,
+      id: `user_${crypto.randomUUID()}`,
       sender: 'user',
       text: textToSend,
       timestamp: getTimeString(),
@@ -151,7 +155,7 @@ export function WhatsAppChatbot() {
       setIsTyping(false)
 
       const botMsg: Message = {
-        id: `bot_${Date.now()}`,
+        id: `bot_${crypto.randomUUID()}`,
         sender: 'bot',
         text: data.reply || `Thank you! You can also chat directly with us on WhatsApp at ${BOT_DISPLAY_PHONE}.`,
         timestamp: getTimeString(),
@@ -169,7 +173,7 @@ export function WhatsAppChatbot() {
     } catch {
       setIsTyping(false)
       const botMsg: Message = {
-        id: `bot_err_${Date.now()}`,
+        id: `bot_err_${crypto.randomUUID()}`,
         sender: 'bot',
         text: `Thanks for your message! For instant answers or to place your order, you can also chat with us directly on WhatsApp.`,
         timestamp: getTimeString(),
@@ -202,12 +206,12 @@ export function WhatsAppChatbot() {
   }
 
   return (
-    <aside aria-label="WhatsApp Chat Assistant" className="fixed bottom-5 right-5 z-50 flex flex-col items-end pointer-events-none">
+    <aside aria-label="Social and Chat Assistant" className="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-50 flex flex-col items-end pointer-events-none">
       
       {/* ── CHAT MODAL WINDOW ── */}
       {isOpen && (
         <div
-          className="pointer-events-auto mb-4 w-[92vw] sm:w-[380px] h-[520px] max-h-[80vh] bg-[#efeae2] dark:bg-[#0b141a] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-black/10 transition-all transform animate-scale-in"
+          className="pointer-events-auto fixed right-3 sm:right-24 bottom-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 w-[92vw] sm:w-[380px] h-[520px] max-h-[85vh] bg-[#efeae2] dark:bg-[#0b141a] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-black/10 transition-all transform animate-scale-in"
           style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.25)' }}
         >
           {/* Header */}
@@ -249,6 +253,45 @@ export function WhatsAppChatbot() {
               >
                 {soundEnabled ? '🔔' : '🔕'}
               </button>
+
+              <a
+                href={FACEBOOK_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Follow us on Facebook"
+                className="p-1.5 rounded-full hover:bg-white/10 text-white/90 transition-colors flex items-center justify-center"
+              >
+                <svg
+                  className="w-4 h-4 fill-current"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+
+              <a
+                href={INSTAGRAM_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Follow us on Instagram (@manico.harvest)"
+                className="p-1.5 rounded-full hover:bg-white/10 text-white/90 transition-colors flex items-center justify-center"
+              >
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+                </svg>
+              </a>
 
               <a
                 href={`https://wa.me/${BOT_PHONE_NUMBER}?text=${encodeURIComponent("Hi Manico Harvest! I am chatting from your website.")}`}
@@ -461,46 +504,114 @@ export function WhatsAppChatbot() {
         </div>
       )}
 
-      {/* ── FLOATING TRIGGER BUTTON (BOTTOM RIGHT CORNER) ── */}
-      <div className="pointer-events-auto relative group">
-        {/* Pulse glow animation background ring */}
-        <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-40 blur-md group-hover:opacity-75 transition duration-500 animate-pulse" />
-
-        {/* Unread Counter Badge */}
-        {unreadCount > 0 && !isOpen && (
-          <span className="absolute -top-1 -right-1 z-20 bg-red-600 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
-            {unreadCount}
-          </span>
-        )}
-
-        {/* Main WhatsApp Button */}
-        <button
-          type="button"
-          onClick={() => {
-            setIsOpen(!isOpen)
-            setUnreadCount(0)
-          }}
-          className="relative w-14 h-14 bg-gradient-to-tr from-[#128C7E] to-[#25D366] hover:from-[#0e7065] hover:to-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95 group-hover:scale-105"
-          aria-label="Open WhatsApp Chatbot Assistant"
-        >
-          {isOpen ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <WhatsAppIcon className="w-7 h-7" fill="#ffffff" />
-          )}
-
-          {/* Online green dot */}
-          <span className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full" />
-        </button>
-
-        {/* Hover Tooltip */}
+      {/* ── FLOATING BUTTONS STACK (CENTERED IN THE MIDDLE) ── */}
+      <div className="flex flex-col items-center">
+        {/* Floating Facebook Button (Above Instagram) */}
         {!isOpen && (
-          <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center whitespace-nowrap bg-stone-900/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xl border border-white/10 pointer-events-none">
-            Chat on WhatsApp ({BOT_DISPLAY_PHONE})
+          <div className="pointer-events-auto relative group mb-3">
+            {/* Subtle Facebook blue glow ring */}
+            <span className="absolute -inset-1 rounded-full bg-[#1877F2] opacity-35 blur-md group-hover:opacity-80 transition duration-500" />
+
+            <a
+              href={FACEBOOK_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-14 h-14 bg-gradient-to-tr from-[#1877F2] to-[#0A58CA] hover:from-[#166fe5] hover:to-[#094bac] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95 group-hover:scale-105"
+              aria-label="Follow Manico Harvest on Facebook"
+            >
+              <svg
+                className="w-7 h-7 fill-current"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+
+            {/* Hover Tooltip */}
+            <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center whitespace-nowrap bg-stone-900/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xl border border-white/10 pointer-events-none">
+              Follow on Facebook
+            </div>
           </div>
         )}
+
+        {/* Floating Instagram Button (Above WhatsApp) */}
+        {!isOpen && (
+          <div className="pointer-events-auto relative group mb-3">
+            {/* Subtle Instagram gradient glow ring */}
+            <span className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] opacity-35 blur-md group-hover:opacity-80 transition duration-500" />
+
+            <a
+              href={INSTAGRAM_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-14 h-14 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:from-[#e28728] hover:via-[#c91f3a] hover:to-[#a81479] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95 group-hover:scale-105"
+              aria-label="Follow Manico Harvest on Instagram"
+            >
+              <svg
+                className="w-7 h-7"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+              </svg>
+            </a>
+
+            {/* Hover Tooltip */}
+            <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center whitespace-nowrap bg-stone-900/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xl border border-white/10 pointer-events-none">
+              Follow on Instagram (@manico.harvest)
+            </div>
+          </div>
+        )}
+
+        {/* Floating WhatsApp Trigger Button */}
+        <div className="pointer-events-auto relative group">
+          {/* Pulse glow animation background ring */}
+          <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-40 blur-md group-hover:opacity-75 transition duration-500 animate-pulse" />
+
+          {/* Unread Counter Badge */}
+          {unreadCount > 0 && !isOpen && (
+            <span className="absolute -top-1 -right-1 z-20 bg-red-600 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
+              {unreadCount}
+            </span>
+          )}
+
+          {/* Main WhatsApp Button */}
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(!isOpen)
+              setUnreadCount(0)
+            }}
+            className="relative w-14 h-14 bg-gradient-to-tr from-[#128C7E] to-[#25D366] hover:from-[#0e7065] hover:to-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95 group-hover:scale-105"
+            aria-label="Open WhatsApp Chatbot Assistant"
+          >
+            {isOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <WhatsAppIcon className="w-7 h-7" fill="#ffffff" />
+            )}
+
+            {/* Online green dot */}
+            <span className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full" />
+          </button>
+
+          {/* Hover Tooltip */}
+          {!isOpen && (
+            <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center whitespace-nowrap bg-stone-900/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xl border border-white/10 pointer-events-none">
+              Chat on WhatsApp ({BOT_DISPLAY_PHONE})
+            </div>
+          )}
+        </div>
       </div>
 
     </aside>
